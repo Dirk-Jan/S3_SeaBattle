@@ -185,7 +185,7 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
         playerName = "";
         labelPlayerName = new Label("Your grid");
         labelPlayerName.setMinWidth(AREAWIDTH);
-        grid.add(labelPlayerName,0,35,1,2);
+        grid.add(labelPlayerName,0,35,1,6);
         
         // Ocean area, a 10 x 10 grid where the player's ships are placed
         oceanArea = new Rectangle(BORDERSIZE,46*BORDERSIZE,AREAWIDTH,AREAHEIGHT);
