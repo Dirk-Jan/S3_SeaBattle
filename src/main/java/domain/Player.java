@@ -84,7 +84,7 @@ public class Player {
         return null;
     }
 
-    //places extra square at ships smaller than the length of 4
+    //TODO: fix this: places extra square at ships smaller than the length of 4
     public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal) {
         Ship shipToPlace = null;
         List<Square> location = new ArrayList<Square>();
@@ -107,6 +107,7 @@ public class Player {
                 }
                 else{
                     gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                    location.add(new Square(bowY, bowX));
                     bowY++;
 //                    removeShipFromInventory(shipToPlace); //cannot place another Ship like this
                 }
@@ -120,8 +121,8 @@ public class Player {
 
         //hier gaat wat fout geeft errors
         if (canShipBePlaced(shipToPlace, bowX, bowY, horizontal)) {
-            removeShipFromInventory(shipToPlace);
-            placeShipOnField(shipToPlace, bowX, bowY, horizontal);
+           //removeShipFromInventory(shipToPlace);
+           //placeShipOnField(shipToPlace, bowX, bowY, horizontal);
             return true;
         }
 
@@ -150,11 +151,15 @@ public class Player {
             Ship ship = field.getShips().get(q);
             //ship still needs a location
             for(int i = 0; i < ship.getLocation().size(); i++){
-                if(ship.getLocation().get(i) ==  squareToCheck){
+
+                if(ship.getLocation().get(i).getPosX() ==  squareToCheck.getPosX() && ship.getLocation().get(i).getPosY() ==  squareToCheck.getPosY()){
+
                     for(int k = 0; k < ship.getLocation().size(); k++){
                        gui.showSquarePlayer(this.playerNr, ship.getLocation().get(k).getPosX(), ship.getLocation().get(k).getPosY(), SquareState.WATER);
-                       addShiptoInventory(ship);
+
                     }
+                    field.removeShip(field.getShips().get(q));
+                    addShiptoInventory(ship);
                 }
             }
         }

@@ -28,6 +28,10 @@ public class Field {
         ships.add(ship);
     }
 
+    public void removeShip(Ship ship){
+        ships.remove(ship);
+    }
+
     private void createField(){
         int posY = 1;
         int posX = 0; //starts with 0 because, pos++ comes first in the loop. Otherwise it won't add the latest position
