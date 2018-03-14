@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class player {
-    public void fireShot(){
+public class Player {
 
     private int playerNr;
     private List<ship> ships;
@@ -33,7 +32,7 @@ public class player {
         return playerNr;
     }
 
-    public player(int playerNr) {
+    public Player(int playerNr) {
         this.playerNr = playerNr;
         this.ships = fillInventoryWithShips();
     }
@@ -70,21 +69,26 @@ public class player {
         return null;
     }
 
-    public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal){
+    public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal) {
         ship shipToPlace = null;
-        for(ship ship : ships) {
-            if(ShipType.AIRCRAFTCARRIER == shipType){   // TODO change shipType.Ari.. to ship.getType()
+        for (ship ship : ships) {
+            if (ShipType.AIRCRAFTCARRIER == shipType) {   // TODO change shipType.Ari.. to ship.getType()
                 shipToPlace = ship;
             }
         }
 
-        if(shipToPlace == null){
+        if (shipToPlace == null) {
             return false;
         }
 
-        if(canShipBePlaced(shipToPlace, bowX, bowY, horizontal)) {
+        if (canShipBePlaced(shipToPlace, bowX, bowY, horizontal)) {
             removeShipFromInventory(shipToPlace);
             placeShipOnField(shipToPlace, bowX, bowY, horizontal);
+            return true;
+        }
+
+        return false;
+    }
 
     public void fireShot(){
 

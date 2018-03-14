@@ -5,10 +5,8 @@
  */
 package seabattlegame;
 
-import domain.player;
-import domain.ship;
+import domain.Player;
 import seabattlegui.ISeaBattleGUI;
-import seabattlegui.SeaBattleApplication;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
@@ -21,10 +19,10 @@ import java.util.List;
  */
 public class SeaBattleGame implements ISeaBattleGame {
 
-    private List<player> players = new ArrayList<player>();
+    private List<Player> players = new ArrayList<Player>();
 
-    private player getPlayerByNumber(int playerNr) {
-        for(player player : players){
+    private Player getPlayerByNumber(int playerNr) {
+        for(Player player : players){
             if(player.getPlayerNr() == playerNr){
                 return player;
             }
@@ -34,14 +32,14 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode) {
-        player player = new player(players.size());
+        Player player = new Player(players.size());
         players.add(player);
         return player.getPlayerNr();
     }
 
     @Override
     public boolean placeShipsAutomatically(int playerNr) {
-        for(player player : players){
+        for(Player player : players){
             if(player.getPlayerNr() == playerNr) {
                 player.placeShipsAutomatically();
             }
@@ -50,7 +48,7 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public boolean placeShip(int playerNr, ShipType shipType, int bowX, int bowY, boolean horizontal) {
-        player player = getPlayerByNumber(playerNr);
+        Player player = getPlayerByNumber(playerNr);
         if(player != null) {
             return player.placeShip(shipType, bowX, bowY, horizontal);
         }
@@ -59,7 +57,7 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public boolean removeShip(int playerNr, int posX, int posY) {
-        player player = getPlayerByNumber(playerNr);
+        Player player = getPlayerByNumber(playerNr);
         if(player != null) {
             return player.removeShip(posX, posY);
         }
@@ -68,7 +66,7 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public boolean removeAllShips(int playerNr) {
-        player player = getPlayerByNumber(playerNr);
+        Player player = getPlayerByNumber(playerNr);
         if(player != null) {
             return player.removeAllShips();
         }
@@ -77,7 +75,7 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public boolean notifyWhenReady(int playerNr) {
-        player player = getPlayerByNumber(playerNr);
+        Player player = getPlayerByNumber(playerNr);
         if(player != null) {
             player.setReadyToStart(true);
         }
@@ -85,11 +83,11 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public ShotType fireShotPlayer(int playerNr, int posX, int posY) {
-        player firingPlayer = getPlayerByNumber(playerNr);
+        Player firingPlayer = getPlayerByNumber(playerNr);
         if(firingPlayer != null) {
             firingPlayer.fireShot(posX, posY);
 
-            player receivingPlayer = getPlayerByNumber(playerNr == 0 ? 1 : 0);
+            Player receivingPlayer = getPlayerByNumber(playerNr == 0 ? 1 : 0);
             if(receivingPlayer != null) {
                 return receivingPlayer.receiveShot(posX, posY);
             }
@@ -98,18 +96,18 @@ public class SeaBattleGame implements ISeaBattleGame {
     }
 
     @Override
-    public ShotType fireShotOpponent(int playerNr) {    // Only used in singleplayer, playerNr is the human player
-        player player = getPlayerByNumber(playerNr);
-        if(player != null) {
-            // TODO use strategy here and fire shot at player
-            return player.receiveShot(0,0);
+    public ShotType fireShotOpponent(int playerNr) {    // Only used in singleplayer, playerNr is the human Player
+        Player Player = getPlayerByNumber(playerNr);
+        if(Player != null) {
+            // TODO use strategy here and fire shot at Player
+            return Player.receiveShot(0,0);
         }
         return ShotType.MISSED;
     }
 
     @Override
     public boolean startNewGame(int playerNr) {
-        players = new ArrayList<player>();
+        players = new ArrayList<Player>();
         // TODO Probably need to close and reopen some GUIs too
     }
 }

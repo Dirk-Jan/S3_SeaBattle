@@ -16,14 +16,14 @@ import seabattlegui.ShotType;
 public interface ISeaBattleGame {
     
     /**
-     * Register player with given name.
-     * The name of the player must be unique.
-     * @param name              Name of the player to be registered
-     * @param application       Reference to application of player
-     * @param singlePlayerMode  Single-player (true) or multi-player (false) mode
-     * @return player number 0 or 1 when name is not already registered and number
-     * of participants does not exceed 1 for single-player mode or 2 for
-     * multi-player mode, otherwise -1 will be returned.
+     * Register Player with given name.
+     * The name of the Player must be unique.
+     * @param name              Name of the Player to be registered
+     * @param application       Reference to application of Player
+     * @param singlePlayerMode  Single-Player (true) or multi-Player (false) mode
+     * @return Player number 0 or 1 when name is not already registered and number
+     * of participants does not exceed 1 for single-Player mode or 2 for
+     * multi-Player mode, otherwise -1 will be returned.
      */
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode);
     
@@ -32,7 +32,7 @@ public interface ISeaBattleGame {
      * Ships that are already placed will be removed. All ships are placed
      * successfully if they all fit entirely within the grid and have no
      * overlap with each other.
-     * @param playerNr identification of player for which ships will be placed
+     * @param playerNr identification of Player for which ships will be placed
      * @return true if all ships are placed successfully, false otherwise.
      */
     public boolean placeShipsAutomatically(int playerNr);
@@ -44,7 +44,7 @@ public interface ISeaBattleGame {
      * If horizontal = false, the stern will be placed below the bow.
      * A ship is placed successfully if it fits entirely within the grid and
      * has no overlap with other ships.
-     * @param playerNr  identification of player for which ship will be placed
+     * @param playerNr  identification of Player for which ship will be placed
      * @param shipType  type of ship to be placed
      * @param bowX      x-coordinate of bow
      * @param bowY      y-coordinate of bow
@@ -55,7 +55,7 @@ public interface ISeaBattleGame {
 
     /**
      * Remove the ship that is placed at the square with coordinates (posX, posY).
-     * @param playerNr identification of player for which ship will be removed
+     * @param playerNr identification of Player for which ship will be removed
      * @param posX     x-coordinate of square where ship was placed
      * @param posY     y-coordinate of square where ship was placed
      * @return true if a ship was successfully removed, false otherwise.
@@ -64,15 +64,15 @@ public interface ISeaBattleGame {
     
     /**
      * Remove all ships that are placed.
-     * @param playerNr  identification of player for which ships will be removed
+     * @param playerNr  identification of Player for which ships will be removed
      * @return true if all ships were successfully removed, false otherwise.
      */
     public boolean removeAllShips(int playerNr);
 
     /**
-     * Notify that the player is ready to play the game, i.e., all ships have
+     * Notify that the Player is ready to play the game, i.e., all ships have
      * been placed.
-     * @param playerNr identification of player who is ready to play the game
+     * @param playerNr identification of Player who is ready to play the game
      * @return true if all ships have been placed, false otherwise.
      */
     public boolean notifyWhenReady(int playerNr);
@@ -84,7 +84,7 @@ public interface ISeaBattleGame {
      * HIT     - A ship was hit
      * SUNK    - A ship was sunk
      * ALLSUNK - All ships are sunk
-     * @param playerNr identification of player who fires.
+     * @param playerNr identification of Player who fires.
      * @param posX     x-coordinate of square
      * @param posY     y-coordinate of square
      * @return result of the shot.
@@ -92,15 +92,15 @@ public interface ISeaBattleGame {
     public ShotType fireShotPlayer(int playerNr, int posX, int posY);
     
     /**
-     * Let the opponent fire a shot at the player's square.
-     * This method is used in the single-player mode.
+     * Let the opponent fire a shot at the Player's square.
+     * This method is used in the single-Player mode.
      * A shot is fired by the opponent using some AI strategy.
      * The result of the shot will be one of the following:
      * MISSED  - No ship was hit
      * HIT     - A ship was hit
      * SUNK    - A ship was sunk
      * ALLSUNK - All ships are sunk
-     * @param playerNr identification of the player for which the opponent
+     * @param playerNr identification of the Player for which the opponent
      *                 will fire a shot
      * @return result of the shot
      */

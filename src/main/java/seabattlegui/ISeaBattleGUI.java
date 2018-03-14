@@ -12,15 +12,15 @@ package seabattlegui;
 public interface ISeaBattleGUI {
     
     /**
-     * Set the name of the player in the GUI.
-     * @param playerNr identification of player
-     * @param name player's name
+     * Set the name of the Player in the GUI.
+     * @param playerNr identification of Player
+     * @param name Player's name
      */
     public void setPlayerName(int playerNr, String name);
     
     /**
      * Set the name of the opponent in the GUI.
-     * @param playerNr identification of player
+     * @param playerNr identification of Player
      * @param name opponent's name
      */
     public void setOpponentName(int playerNr, String name);
@@ -32,7 +32,7 @@ public interface ISeaBattleGUI {
      * HIT     - A ship was hit
      * SUNK    - A ship was sunk
      * ALLSUNK - All ships are sunk
-     * @param playerNr identification of player
+     * @param playerNr identification of Player
      * @param shotType result of shot fired by opponent
      */
     public void opponentFiresShot(int playerNr, ShotType shotType);
@@ -40,8 +40,8 @@ public interface ISeaBattleGUI {
     /**
      * Show state of a square in the ocean area.
      * The new state of the square will be shown in the area where
-     * the ships of the player are placed (ocean area).
-     * @param playerNr identification of player
+     * the ships of the Player are placed (ocean area).
+     * @param playerNr identification of Player
      * @param posX        x-position of square
      * @param posY        y-position of square
      * @param squareState state of square
@@ -52,7 +52,7 @@ public interface ISeaBattleGUI {
      * Show state of a square in the target area.
      * The new state of the square will be shown in the area where
      * the ships of the opponent are placed (target area)
-     * @param playerNr identification of player
+     * @param playerNr identification of Player
      * @param posX        x-position of square
      * @param posY        y-position of square
      * @param squareState state of square
