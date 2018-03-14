@@ -1,11 +1,19 @@
 package domain;
 
-public class ship {
-    private int length;
-    private int location;
+import seabattlegui.ShipType;
 
+import java.util.List;
 
-    public void sink(){
+public abstract class ship {
+    protected int length;
+    protected ShipType shipType;
+    private List<Square> location;
 
+    public void setLocation(List<Square> location) {
+        this.location = location;
+    }
+
+    public List<Square> getLocation() {
+        return location;
     }
 }

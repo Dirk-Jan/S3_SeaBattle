@@ -6,9 +6,11 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.List;
 
 public class player {
+
     public void fireShot(){
 
     }
+
     public boolean placeShip(){
        return true;
     }
