@@ -33,7 +33,7 @@ public class SeaBattleGame implements ISeaBattleGame {
 
     @Override
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode) {
-        Player player = new Player(players.size());
+        Player player = new Player(players.size(), application);
         players.add(player);
         return player.getPlayerNr();
     }
@@ -56,6 +56,7 @@ public class SeaBattleGame implements ISeaBattleGame {
             return player.placeShip(shipType, bowX, bowY, horizontal);
         }
         return false;
+
     }
 
     @Override
