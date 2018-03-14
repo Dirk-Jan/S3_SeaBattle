@@ -9,6 +9,7 @@ import domain.Player;
 import seabattlegui.ISeaBattleGUI;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class SeaBattleGame implements ISeaBattleGame {
                 player.placeShipsAutomatically();
             }
         }
+        throw new NotImplementedException();
+
     }
 
     @Override
@@ -79,6 +82,7 @@ public class SeaBattleGame implements ISeaBattleGame {
         if(player != null) {
             player.setReadyToStart(true);
         }
+        throw new NotImplementedException();
     }
 
     @Override
@@ -109,5 +113,6 @@ public class SeaBattleGame implements ISeaBattleGame {
     public boolean startNewGame(int playerNr) {
         players = new ArrayList<Player>();
         // TODO Probably need to close and reopen some GUIs too
+        throw new NotImplementedException();
     }
 }

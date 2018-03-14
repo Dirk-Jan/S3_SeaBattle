@@ -104,6 +104,7 @@ public class Player {
 
     private boolean canShipBePlaced(ship shipToPlace, int bowX, int bowY, boolean horizontal) {
         // TODO Implement canshipbeplaced algorithm (Field required)
+        throw new NotImplementedException();
     }
 
 
@@ -124,5 +125,6 @@ public class Player {
 
     public ShotType receiveShot(int posX, int posY) {
         // TODO Implement receiveShot
+        throw new NotImplementedException();
     }
 }
