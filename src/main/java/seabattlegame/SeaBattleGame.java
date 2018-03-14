@@ -43,9 +43,11 @@ public class SeaBattleGame implements ISeaBattleGame {
         for(Player player : players){
             if(player.getPlayerNr() == playerNr) {
                 player.placeShipsAutomatically();
+                return true;
             }
         }
-        throw new NotImplementedException();
+        return false;
+        //throw new NotImplementedException();
 
     }
 

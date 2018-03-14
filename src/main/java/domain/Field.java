@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Field {
     private List<Square> squares = new ArrayList<Square>();
-    private List<ship> ships;
+    private List<Ship> ships = new ArrayList<Ship>();
 
     public Field() {
 
     }
 
-    public Field(List<Square> squares, List<ship> ships) {
+    public Field(List<Square> squares, List<Ship> ships) {
         createField();
         this.ships = ships;
     }
@@ -20,8 +20,12 @@ public class Field {
         return squares;
     }
 
-    public List<ship> getShips() {
+    public List<Ship> getShips() {
         return ships;
+    }
+
+    public void addShip(Ship ship){
+        ships.add(ship);
     }
 
     private void createField(){
@@ -44,12 +48,12 @@ public class Field {
 
     }
 
-    public boolean canShipBePlaced(ship ship, int bowX, int bowY, boolean horizontal) {
+    public boolean canShipBePlaced(Ship ship, int bowX, int bowY, boolean horizontal) {
 
 //        if(shipPresentOnLocation(bowX, bowY)){
 //            return false;
 //        }
-        // Check for coliding ships or if ship is outside of playingfield
+        // Check for coliding ships or if Ship is outside of playingfield
         for(int i=0; i<ship.length ; i++){
             if(horizontal){
                 if(bowX + i > 10 || shipPresentOnLocation(bowX + i, bowY)){
@@ -66,7 +70,7 @@ public class Field {
     }
 
     private boolean shipPresentOnLocation(int x, int y) {
-        for(ship ship : ships){
+        for(Ship ship : ships){
             for(Square square : ship.getLocation()){
                 if(square.getPosX() == x && square.getPosY() == y){
                     return true;

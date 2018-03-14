@@ -97,10 +97,10 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
     // Flag to indicate that the game is endend
     private boolean gameEnded = false;
     
-    // Flag to indicate whether next ship should be placed horizontally or vertically
+    // Flag to indicate whether next Ship should be placed horizontally or vertically
     private boolean horizontal = true;
     
-    // Radio buttons to indicate whether next ship should be placed horizontally or vertically
+    // Radio buttons to indicate whether next Ship should be placed horizontally or vertically
     private Label labelHorizontalVertical;
     private RadioButton radioHorizontal;
     private RadioButton radioVertical;
@@ -335,9 +335,9 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
         grid.add(buttonStartNewGame,1,30,1,3);
         
         // Radio buttons to place ships horizontally or vertically
-        labelHorizontalVertical = new Label("Place next ship: ");
+        labelHorizontalVertical = new Label("Place next Ship: ");
         radioHorizontal = new RadioButton("horizontally");
-        Tooltip tooltipHorizontal = new Tooltip("Place next ship horizontally");
+        Tooltip tooltipHorizontal = new Tooltip("Place next Ship horizontally");
         radioHorizontal.setTooltip(tooltipHorizontal);
         radioHorizontal.setOnAction(new EventHandler() {
             @Override
@@ -346,7 +346,7 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
             }
         });
         radioVertical = new RadioButton("vertically");
-        Tooltip tooltipVertical = new Tooltip("Place next ship vertically");
+        Tooltip tooltipVertical = new Tooltip("Place next Ship vertically");
         radioVertical.setTooltip(tooltipVertical);
         radioVertical.setOnAction(new EventHandler() {
             @Override
@@ -380,11 +380,11 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
         buttonPlaceAircraftCarrier.setDisable(true);
         grid.add(buttonPlaceAircraftCarrier,1,48,1,3);
         
-        // Button to place battle ship on selected square
-        buttonPlaceBattleShip = new Button("Place battle ship (4)");
+        // Button to place battle Ship on selected square
+        buttonPlaceBattleShip = new Button("Place battle Ship (4)");
         buttonPlaceBattleShip.setMinWidth(BUTTONWIDTH);
         Tooltip tooltipPlaceBattleShip = 
-                new Tooltip("Press this button to place the battle ship on the selected square");
+                new Tooltip("Press this button to place the battle Ship on the selected square");
         buttonPlaceBattleShip.setTooltip(tooltipPlaceBattleShip);
         buttonPlaceBattleShip.setOnAction(new EventHandler() {
             @Override
@@ -395,7 +395,7 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
         buttonPlaceBattleShip.setDisable(true);
         grid.add(buttonPlaceBattleShip,1,52,1,3);
         
-        // Button to place battle ship on selected square
+        // Button to place battle Ship on selected square
         buttonPlaceCruiser = new Button("Place cruiser (3)");
         buttonPlaceCruiser.setMinWidth(BUTTONWIDTH);
         Tooltip tooltipPlaceCruiser = 
@@ -440,11 +440,11 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
         buttonPlaceMineSweeper.setDisable(true);
         grid.add(buttonPlaceMineSweeper,1,64,1,3);
         
-        // Button to remove ship that is positioned at selected square
-        buttonRemoveShip = new Button("Remove ship");
+        // Button to remove Ship that is positioned at selected square
+        buttonRemoveShip = new Button("Remove Ship");
         buttonRemoveShip.setMinWidth(BUTTONWIDTH);
         Tooltip tooltipRemoveShip = 
-                new Tooltip("Press this button to remove ship that is "
+                new Tooltip("Press this button to remove Ship that is "
                         + "positioned on the selected square");
         buttonRemoveShip.setTooltip(tooltipRemoveShip);
         buttonRemoveShip.setOnAction(new EventHandler() {
@@ -523,9 +523,9 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
     /**
      * Communicate the result of a shot fired by the opponent.
      * The result of the shot will be one of the following:
-     * MISSED  - No ship was hit
-     * HIT     - A ship was hit
-     * SUNK    - A ship was sunk
+     * MISSED  - No Ship was hit
+     * HIT     - A Ship was hit
+     * SUNK    - A Ship was sunk
      * ALLSUNK - All ships are sunk
      * @param playerNr identification of Player
      * @param shotType result of shot fired by opponent
@@ -726,14 +726,14 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
     }
     
     /**
-     * Place a ship of a certain ship type. The bow of the ship will
+     * Place a Ship of a certain Ship type. The bow of the Ship will
      * be placed at the selected square in the ocean area. The stern is 
-     * placed to the right of the bow when the ship should be placed
-     * horizontally and below of the bow when the ship should be placed
+     * placed to the right of the bow when the Ship should be placed
+     * horizontally and below of the bow when the Ship should be placed
      * vertically. The exact position of the stern depends on the size 
-     * of the ship.
-     * @param shipType    type of the ship to be placed
-     * @param horizontal  indicates whether ship should be placed horizontally or
+     * of the Ship.
+     * @param shipType    type of the Ship to be placed
+     * @param horizontal  indicates whether Ship should be placed horizontally or
      *                    vertically.
      */
     private void placeShipAtSelectedSquare(ShipType shipType, boolean horizontal) {
@@ -742,16 +742,16 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
             int bowY = selectedSquareY;
             boolean success = game.placeShip(playerNr, shipType, bowX, bowY, horizontal);
             if (!success) {
-                showMessage("Cannot place ship");
+                showMessage("Cannot place Ship");
             }
         }
         else {
-            showMessage("Select square in " + playerName + "\'s grid to place ship");
+            showMessage("Select square in " + playerName + "\'s grid to place Ship");
         }
     }
     
     /**
-     * Remove ship that is positioned at selected square in ocean area.
+     * Remove Ship that is positioned at selected square in ocean area.
      */
     private void removeShipAtSelectedSquare() {
         if (squareSelectedInOceanArea) {
@@ -759,11 +759,11 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
             int posY = selectedSquareY;
             boolean success = game.removeShip(playerNr, posX, posY);
             if (!success) {
-                showMessage("Cannot remove ship");
+                showMessage("Cannot remove Ship");
             }
         }
         else {
-            showMessage("Select square in " + playerName + "\'s grid to remove ship");
+            showMessage("Select square in " + playerName + "\'s grid to remove Ship");
         }
     }
     
@@ -842,7 +842,7 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
      */
     private void rectangleOceanAreaMousePressed(MouseEvent event, int x, int y) {
         if (!playingMode) {
-            // Game is not in playing mode: select square to place a ship
+            // Game is not in playing mode: select square to place a Ship
             if (squareSelectedInOceanArea) {
                 Rectangle square = squaresOceanArea[selectedSquareX][selectedSquareY];
                 if (square.getFill().equals(Color.YELLOW)) {

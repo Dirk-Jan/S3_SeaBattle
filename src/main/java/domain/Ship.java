@@ -4,7 +4,7 @@ import seabattlegui.ShipType;
 
 import java.util.List;
 
-public abstract class ship {
+public abstract class Ship {
     protected int length;
     protected ShipType shipType;
     private List<Square> location;

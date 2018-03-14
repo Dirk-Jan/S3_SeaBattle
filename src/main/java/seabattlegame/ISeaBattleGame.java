@@ -38,27 +38,27 @@ public interface ISeaBattleGame {
     public boolean placeShipsAutomatically(int playerNr);
 
     /**
-     * Place ship of given type.
-     * A new ship will be placed with its bow at the given coordinates.
+     * Place Ship of given type.
+     * A new Ship will be placed with its bow at the given coordinates.
      * If horizontal = true, the stern will be placed to the right of the bow.
      * If horizontal = false, the stern will be placed below the bow.
-     * A ship is placed successfully if it fits entirely within the grid and
+     * A Ship is placed successfully if it fits entirely within the grid and
      * has no overlap with other ships.
-     * @param playerNr  identification of Player for which ship will be placed
-     * @param shipType  type of ship to be placed
+     * @param playerNr  identification of Player for which Ship will be placed
+     * @param shipType  type of Ship to be placed
      * @param bowX      x-coordinate of bow
      * @param bowY      y-coordinate of bow
-     * @param horizontal indicate whether ship will placed horizontally or vertically
-     * @return true if ship can be placed successfully, false otherwise.
+     * @param horizontal indicate whether Ship will placed horizontally or vertically
+     * @return true if Ship can be placed successfully, false otherwise.
      */
     public boolean placeShip(int playerNr, ShipType shipType, int bowX, int bowY, boolean horizontal);
 
     /**
-     * Remove the ship that is placed at the square with coordinates (posX, posY).
-     * @param playerNr identification of Player for which ship will be removed
-     * @param posX     x-coordinate of square where ship was placed
-     * @param posY     y-coordinate of square where ship was placed
-     * @return true if a ship was successfully removed, false otherwise.
+     * Remove the Ship that is placed at the square with coordinates (posX, posY).
+     * @param playerNr identification of Player for which Ship will be removed
+     * @param posX     x-coordinate of square where Ship was placed
+     * @param posY     y-coordinate of square where Ship was placed
+     * @return true if a Ship was successfully removed, false otherwise.
      */
     public boolean removeShip(int playerNr, int posX, int posY);
     
@@ -80,9 +80,9 @@ public interface ISeaBattleGame {
     /**
      * Fire a shot at the opponent's square with given coordinates.
      * The result of the shot will be one of the following:
-     * MISSED  - No ship was hit
-     * HIT     - A ship was hit
-     * SUNK    - A ship was sunk
+     * MISSED  - No Ship was hit
+     * HIT     - A Ship was hit
+     * SUNK    - A Ship was sunk
      * ALLSUNK - All ships are sunk
      * @param playerNr identification of Player who fires.
      * @param posX     x-coordinate of square
@@ -96,9 +96,9 @@ public interface ISeaBattleGame {
      * This method is used in the single-Player mode.
      * A shot is fired by the opponent using some AI strategy.
      * The result of the shot will be one of the following:
-     * MISSED  - No ship was hit
-     * HIT     - A ship was hit
-     * SUNK    - A ship was sunk
+     * MISSED  - No Ship was hit
+     * HIT     - A Ship was hit
+     * SUNK    - A Ship was sunk
      * ALLSUNK - All ships are sunk
      * @param playerNr identification of the Player for which the opponent
      *                 will fire a shot

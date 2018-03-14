@@ -2,7 +2,7 @@ package domain;
 
 import seabattlegui.ShipType;
 
-public class MineSweeper extends ship{
+public class MineSweeper extends Ship {
 
     public MineSweeper() {
         length = 2;

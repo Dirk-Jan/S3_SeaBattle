@@ -4,6 +4,7 @@ package domain;
 import seabattlegui.ISeaBattleGUI;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
+import seabattlegui.SquareState;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Random;
 public class Player {
 
     private int playerNr;
-    private List<ship> ships;
+    private List<Ship> shipsToPlace;
 
     private boolean readyToStart = false;
 
@@ -29,8 +30,8 @@ public class Player {
         this.readyToStart = readyToStart;
     }
 
-    public List<ship> getShips() {
-        return ships;
+    public List<Ship> getShipsToPlace() {
+        return shipsToPlace;
     }
 
     public int getPlayerNr() {
@@ -39,13 +40,14 @@ public class Player {
 
     public Player(int playerNr, ISeaBattleGUI gui) {
         this.playerNr = playerNr;
-        this.ships = fillInventoryWithShips();
+        this.shipsToPlace = fillInventoryWithShips();
         this.field = new Field();
         this.gui = gui;
     }
 
-    private List<ship> fillInventoryWithShips(){
-        List<ship> ships = new ArrayList<ship>();
+    //if inventory missing shipsToPlace we have to make the button unclickable
+    private List<Ship> fillInventoryWithShips(){
+        List<Ship> ships = new ArrayList<Ship>();
         ships.add(new AircraftCarrier());
         ships.add(new BattleShip());
         ships.add(new Cruiser());
@@ -54,11 +56,13 @@ public class Player {
         return ships;
     }
 
+    //hij mag geen schepen buiten het bord plaatsen want dan krijg je sws een error
+    //afvangen watvoor schip het is, daarnaast kijken of het horizontaal of verticaal geplaatst kan worden
     public void placeShipsAutomatically() {
         int randomX, randomY;
         Random randomGenerator = new Random();
 
-        for(ship ship : ships) {
+        for(Ship ship : shipsToPlace) {
             randomX = getRandomNumber(randomGenerator, 0, 9);
             randomY = getRandomNumber(randomGenerator, 0, 9);
 
@@ -80,56 +84,94 @@ public class Player {
         return null;
     }
 
+    //places extra square at ships smaller than the length of 4
     public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal) {
-        ship shipToPlace = null;
-        for (ship ship : ships) {
+        Ship shipToPlace = null;
+        List<Square> location = new ArrayList<Square>();
+
+        for (Ship ship : shipsToPlace) {
             if (ship.shipType == shipType) {
                 shipToPlace = ship;
             }
         }
-
+        //why null?
         if (shipToPlace == null) {
             return false;
         }
+        else{
+            for(int i =0; i < shipToPlace.length; i++){
+                if(horizontal){
+                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                    location.add(new Square(bowY, bowX));
+                    bowX++;
+                }
+                else{
+                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                    bowY++;
+//                    removeShipFromInventory(shipToPlace); //cannot place another Ship like this
+                }
 
+            }
+            removeShipFromInventory(shipToPlace); //cannot place another Ship like this
+
+            shipToPlace.setLocation(location);
+            field.addShip(shipToPlace);
+        }
+
+        //hier gaat wat fout geeft errors
         if (canShipBePlaced(shipToPlace, bowX, bowY, horizontal)) {
             removeShipFromInventory(shipToPlace);
             placeShipOnField(shipToPlace, bowX, bowY, horizontal);
             return true;
         }
 
-        return false;
+        return true; //false;
     }
 
     public void fireShot(){
 
     }
 
-    public boolean placeShip(){
-       return true;
+    private void placeShipOnField(Ship ship, int bowX, int bowY, boolean horizontal) {
+        gui.showSquarePlayer(this.playerNr, bowX, bowY, SquareState.SHIP);
     }
 
-    private void placeShipOnField(ship ship, int bowX, int bowY, boolean horizontal) {
-        // TODO add ahip to field (FIELD required)
-    }
-
-    private boolean canShipBePlaced(ship shipToPlace, int bowX, int bowY, boolean horizontal) {
+    private boolean canShipBePlaced(Ship shipToPlace, int bowX, int bowY, boolean horizontal) {
         return field.canShipBePlaced(shipToPlace, bowX, bowY, horizontal);
     }
 
 
     public boolean removeShip(int posX, int posY){
-        // TODO Implement remove ship (Field required)
+        // TODO Implement remove Ship (Field required)
+
+        Square squareToCheck = new Square(posY, posX);
+
+        for(int q = 0; q < field.getShips().size(); q++){
+            Ship ship = field.getShips().get(q);
+            //ship still needs a location
+            for(int i = 0; i < ship.getLocation().size(); i++){
+                if(ship.getLocation().get(i) ==  squareToCheck){
+                    for(int k = 0; k < ship.getLocation().size(); k++){
+                       gui.showSquarePlayer(this.playerNr, ship.getLocation().get(k).getPosX(), ship.getLocation().get(k).getPosY(), SquareState.WATER);
+                       addShiptoInventory(ship);
+                    }
+                }
+            }
+        }
 
         return false;
     }
 
-    public void removeShipFromInventory(ship ship){
-        ships.remove(ship);
+    public void removeShipFromInventory(Ship ship){
+        shipsToPlace.remove(ship);
+    }
+
+    private void addShiptoInventory(Ship ship){
+        shipsToPlace.add(ship);
     }
 
     public boolean removeAllShips() {
-        // TODO Implement remove all ships (Field class required)
+        // TODO Implement remove all shipsToPlace (Field class required)
         return true;
     }
 

@@ -28,9 +28,9 @@ public interface ISeaBattleGUI {
     /**
      * Communicate the result of a shot fired by the opponent.
      * The result of the shot will be one of the following:
-     * MISSED  - No ship was hit
-     * HIT     - A ship was hit
-     * SUNK    - A ship was sunk
+     * MISSED  - No Ship was hit
+     * HIT     - A Ship was hit
+     * SUNK    - A Ship was sunk
      * ALLSUNK - All ships are sunk
      * @param playerNr identification of Player
      * @param shotType result of shot fired by opponent
