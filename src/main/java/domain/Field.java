@@ -43,4 +43,36 @@ public class Field {
         }
 
     }
+
+    public boolean canShipBePlaced(ship ship, int bowX, int bowY, boolean horizontal) {
+
+//        if(shipPresentOnLocation(bowX, bowY)){
+//            return false;
+//        }
+        // Check for coliding ships or if ship is outside of playingfield
+        for(int i=0; i<ship.length ; i++){
+            if(horizontal){
+                if(bowX + i > 10 || shipPresentOnLocation(bowX + i, bowY)){
+                    return false;
+                }
+            }else{
+                if(bowY + i > 10 || shipPresentOnLocation(bowX, bowY + i)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean shipPresentOnLocation(int x, int y) {
+        for(ship ship : ships){
+            for(Square square : ship.getLocation()){
+                if(square.getPosX() == x && square.getPosY() == y){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

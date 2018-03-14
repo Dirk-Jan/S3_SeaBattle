@@ -1,6 +1,7 @@
 package domain;
 
 
+import seabattlegui.ISeaBattleGUI;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -15,6 +16,10 @@ public class Player {
     private List<ship> ships;
 
     private boolean readyToStart = false;
+
+    private Field field;
+
+    private ISeaBattleGUI gui;
 
     public boolean isReadyToStart() {
         return readyToStart;
@@ -32,14 +37,20 @@ public class Player {
         return playerNr;
     }
 
-    public Player(int playerNr) {
+    public Player(int playerNr, ISeaBattleGUI gui) {
         this.playerNr = playerNr;
         this.ships = fillInventoryWithShips();
+        this.field = new Field();
+        this.gui = gui;
     }
 
     private List<ship> fillInventoryWithShips(){
         List<ship> ships = new ArrayList<ship>();
-        // TODO add ships
+        ships.add(new AircraftCarrier());
+        ships.add(new BattleShip());
+        ships.add(new Cruiser());
+        ships.add(new MineSweeper());
+        ships.add(new Submarine());
         return ships;
     }
 
@@ -72,7 +83,7 @@ public class Player {
     public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal) {
         ship shipToPlace = null;
         for (ship ship : ships) {
-            if (ShipType.AIRCRAFTCARRIER == shipType) {   // TODO change shipType.Ari.. to ship.getType()
+            if (ship.shipType == shipType) {
                 shipToPlace = ship;
             }
         }
@@ -103,8 +114,7 @@ public class Player {
     }
 
     private boolean canShipBePlaced(ship shipToPlace, int bowX, int bowY, boolean horizontal) {
-        // TODO Implement canshipbeplaced algorithm (Field required)
-        throw new NotImplementedException();
+        return field.canShipBePlaced(shipToPlace, bowX, bowY, horizontal);
     }
 
 
