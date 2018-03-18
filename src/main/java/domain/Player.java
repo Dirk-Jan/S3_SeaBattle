@@ -99,24 +99,26 @@ public class Player {
             return false;
         }
         else{
-            for(int i =0; i < shipToPlace.length; i++){
-                if(horizontal){
-                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
-                    location.add(new Square(bowY, bowX));
-                    bowX++;
-                }
-                else{
-                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
-                    location.add(new Square(bowY, bowX));
-                    bowY++;
-//                    removeShipFromInventory(shipToPlace); //cannot place another Ship like this
-                }
+//            for(int i =0; i < shipToPlace.length; i++){
+//                if(horizontal){
+//                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+//                    location.add(new Square(bowY, bowX));
+//                    bowX++;
+//                }
+//                else{
+//                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+//                    location.add(new Square(bowY, bowX));
+//                    bowY++;
+////                    removeShipFromInventory(shipToPlace); //cannot place another Ship like this
+//                }
+//
+//            }
+//            removeShipFromInventory(shipToPlace); //cannot place another Ship like this
+//
+//            shipToPlace.setLocation(location);
+//            field.addShip(shipToPlace);
 
-            }
-            removeShipFromInventory(shipToPlace); //cannot place another Ship like this
-
-            shipToPlace.setLocation(location);
-            field.addShip(shipToPlace);
+            placeShipOnField(shipToPlace, bowX, bowY, horizontal);
         }
 
         //hier gaat wat fout geeft errors
@@ -134,7 +136,25 @@ public class Player {
     }
 
     private void placeShipOnField(Ship ship, int bowX, int bowY, boolean horizontal) {
-        gui.showSquarePlayer(this.playerNr, bowX, bowY, SquareState.SHIP);
+//        gui.showSquarePlayer(this.playerNr, bowX, bowY, SquareState.SHIP);
+        List<Square> location = new ArrayList<Square>();
+        for(int i =0; i < ship.length; i++){
+            if(horizontal){
+                gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                location.add(new Square(bowY, bowX));
+                bowX++;
+            }
+            else{
+                gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                location.add(new Square(bowY, bowX));
+                bowY++;
+            }
+
+        }
+        removeShipFromInventory(ship); //cannot place another Ship like this
+
+        ship.setLocation(location);
+        field.addShip(ship);
     }
 
     private boolean canShipBePlaced(Ship shipToPlace, int bowX, int bowY, boolean horizontal) {
