@@ -26,8 +26,9 @@ public class Player {
         return readyToStart;
     }
 
-    public void setReadyToStart(boolean readyToStart) {
+    public boolean setReadyToStart(boolean readyToStart) {
         this.readyToStart = readyToStart;
+        return this.readyToStart;
     }
 
     public List<Ship> getShipsToPlace() {
@@ -56,28 +57,60 @@ public class Player {
         return ships;
     }
 
-    //hij mag geen schepen buiten het bord plaatsen want dan krijg je sws een error
-    //afvangen watvoor schip het is, daarnaast kijken of het horizontaal of verticaal geplaatst kan worden
+
+
     public void placeShipsAutomatically() {
-        int randomX, randomY;
+        int randomX, randomY, randomHor;
         Random randomGenerator = new Random();
 
-        for(Ship ship : shipsToPlace) {
+        for(int i = 0; i < shipsToPlace.size()+i; i++){
+        //for(Ship ship : shipsToPlace) {
             randomX = getRandomNumber(randomGenerator, 0, 9);
             randomY = getRandomNumber(randomGenerator, 0, 9);
+            randomHor = getRandomNumber(randomGenerator, 0,1);
 
-            while(canShipBePlaced(ship, randomX, randomY, true)){
+            boolean horizontal = randomHor==0? true: false;
+            while(!canShipBePlaced(shipsToPlace.get(0), randomX, randomY, horizontal)){
                 randomX = getRandomNumber(randomGenerator, 0, 9);
                 randomY = getRandomNumber(randomGenerator, 0, 9);
             }
 
-            placeShipOnField(ship, randomX, randomY, true);
+            placeShip(shipsToPlace.get(0).shipType, randomX, randomY, horizontal);
+            //placeShipOnField(shipsToPlace.get(0), randomX, randomY, horizontal);
         }
     }
 
-    private int getRandomNumber(Random random, int min, int max) {
-        return random.nextInt(max - min + 1) + min;
-    }
+//region oude code
+    //        int randomX, randomY, horizontal;
+//        Random randomGenerator = new Random();
+//        boolean howToPlace;
+//
+//        //Step 1.) Horizontal or vertical placement?
+//        horizontal = getRandomNumber(randomGenerator, 0, 1);
+//
+//        howToPlace = (horizontal==0) ? true : false;
+//
+//        //Step 2.) Create random coordinates
+//        //Step 3.) Check if ship length doesn't go out of grid
+//        //Step 4.) Check if ship overlaps another ship
+//
+//
+//
+//        for(Ship ship : shipsToPlace) {
+//            randomX = getRandomNumber(randomGenerator, 0, 9);
+//            randomY = getRandomNumber(randomGenerator, 0, 9);
+//
+//            while(canShipBePlaced(ship, randomX, randomY, true)){
+//                randomX = getRandomNumber(randomGenerator, 0, 9);
+//                randomY = getRandomNumber(randomGenerator, 0, 9);
+//            }
+//
+//            placeShipOnField(ship, randomX, randomY, true);
+//        }
+// endregion
+
+
+    private int getRandomNumber(Random random, int min, int max) { return random.nextInt((max - min) + 1) + min; }
 
     public ShotType fireShot(int posX, int posY){
 
@@ -87,6 +120,8 @@ public class Player {
 
     //Mention left upper corner means place 0, grid goes from 0 to 9.
     //TODO: prio=low -> maybe improve upper instruction
+
+    //place ship checks wether the ship can be placed or not
     public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal) {
         Ship shipToPlace = null;
         List<Square> location = new ArrayList<Square>();
@@ -101,25 +136,6 @@ public class Player {
             return false;
         }
         else{
-//            for(int i =0; i < shipToPlace.length; i++){
-//                if(horizontal){
-//                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
-//                    location.add(new Square(bowY, bowX));
-//                    bowX++;
-//                }
-//                else{
-//                    gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
-//                    location.add(new Square(bowY, bowX));
-//                    bowY++;
-////                    removeShipFromInventory(shipToPlace); //cannot place another Ship like this
-//                }
-//
-//            }
-//            removeShipFromInventory(shipToPlace); //cannot place another Ship like this
-//
-//            shipToPlace.setLocation(location);
-//            field.addShip(shipToPlace);
-
             placeShipOnField(shipToPlace, bowX, bowY, horizontal);
         }
 
@@ -154,7 +170,6 @@ public class Player {
 
         }
         removeShipFromInventory(ship); //cannot place another Ship like this
-
         ship.setLocation(location);
         field.addShip(ship);
     }
@@ -176,7 +191,6 @@ public class Player {
                 if(ship.getLocation().get(i).getPosX() ==  squareToCheck.getPosX() && ship.getLocation().get(i).getPosY() ==  squareToCheck.getPosY()){
                     for(int k = 0; k < ship.getLocation().size(); k++){
                         gui.showSquarePlayer(this.playerNr, ship.getLocation().get(k).getPosX(), ship.getLocation().get(k).getPosY(), SquareState.WATER);
-
                     }
                     field.removeShip(field.getShips().get(q));
                     addShiptoInventory(ship);
@@ -199,14 +213,15 @@ public class Player {
 
     // TODO: prio=medium -> remove all ships at a time
     public boolean removeAllShips() {
-        for (Ship ship : field.getShips()) {
-            //removeShip(ship.getLocation().get().getPosX(), ship.getLocation().get().getPosY());
-            for(int i = 0; i < ship.getLocation().size(); i++){
-                removeShip(ship.getLocation().get(i).getPosX(), ship.getLocation().get(i).getPosY());
-            }
-        }
+        if(field.getShips().size() > 0){
+            for (int q = 0; field.getShips().size() != 0; q++) {
+                Ship ship = field.getShips().get(0);
 
-        return true;
+                removeShip(ship.getLocation().get(0).getPosX(), ship.getLocation().get(0).getPosY());
+            }
+            return true;
+        }
+        return false;
     }
 
 
