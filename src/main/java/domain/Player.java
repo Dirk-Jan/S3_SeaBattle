@@ -84,7 +84,9 @@ public class Player {
         return null;
     }
 
-    //TODO: fix this: places extra square at ships smaller than the length of 4
+
+    //Mention left upper corner means place 0, grid goes from 0 to 9.
+    //TODO: prio=low -> maybe improve upper instruction
     public boolean placeShip(ShipType shipType, int bowX, int bowY, boolean horizontal) {
         Ship shipToPlace = null;
         List<Square> location = new ArrayList<Square>();
@@ -162,9 +164,8 @@ public class Player {
     }
 
 
+    //TODO: Fix squarestate change on click
     public boolean removeShip(int posX, int posY){
-        // TODO Implement remove Ship (Field required)
-
         Square squareToCheck = new Square(posY, posX);
 
         for(int q = 0; q < field.getShips().size(); q++){
@@ -173,19 +174,20 @@ public class Player {
             for(int i = 0; i < ship.getLocation().size(); i++){
 
                 if(ship.getLocation().get(i).getPosX() ==  squareToCheck.getPosX() && ship.getLocation().get(i).getPosY() ==  squareToCheck.getPosY()){
-
                     for(int k = 0; k < ship.getLocation().size(); k++){
-                       gui.showSquarePlayer(this.playerNr, ship.getLocation().get(k).getPosX(), ship.getLocation().get(k).getPosY(), SquareState.WATER);
+                        gui.showSquarePlayer(this.playerNr, ship.getLocation().get(k).getPosX(), ship.getLocation().get(k).getPosY(), SquareState.WATER);
 
                     }
                     field.removeShip(field.getShips().get(q));
                     addShiptoInventory(ship);
+                    return true;
                 }
             }
         }
-
         return false;
     }
+
+
 
     public void removeShipFromInventory(Ship ship){
         shipsToPlace.remove(ship);
@@ -195,10 +197,18 @@ public class Player {
         shipsToPlace.add(ship);
     }
 
+    // TODO: prio=medium -> remove all ships at a time
     public boolean removeAllShips() {
-        // TODO Implement remove all shipsToPlace (Field class required)
+        for (Ship ship : field.getShips()) {
+            //removeShip(ship.getLocation().get().getPosX(), ship.getLocation().get().getPosY());
+            for(int i = 0; i < ship.getLocation().size(); i++){
+                removeShip(ship.getLocation().get(i).getPosX(), ship.getLocation().get(i).getPosY());
+            }
+        }
+
         return true;
     }
+
 
     public ShotType receiveShot(int posX, int posY) {
         // TODO Implement receiveShot
