@@ -59,9 +59,9 @@ public class Field {
         tempLocation = new ArrayList<Square>();
         for(int i = 0; i < shipLength; i++){
             if(horizontal)
-                tempLocation.add(new Square(posY+i, posX));
+                tempLocation.add(new Square(posX+i, posY));
             else
-                tempLocation.add(new Square(posY, posX+i));
+                tempLocation.add(new Square(posX, posY+i));
         }
     }
 
@@ -104,6 +104,7 @@ public class Field {
     }
 
     private boolean shipPresentOnLocation(int x, int y) {
+
         for(Ship ship : ships){
             for(Square square : ship.getLocation()){
                 if(square.getPosX() == x && square.getPosY() == y){
