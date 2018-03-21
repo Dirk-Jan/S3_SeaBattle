@@ -59,9 +59,9 @@ public class Field {
         tempLocation = new ArrayList<Square>();
         for(int i = 0; i < shipLength; i++){
             if(horizontal)
-                tempLocation.add(new Square(posX+i, posY));
+                tempLocation.add(new Square(posY, posX+i));
             else
-                tempLocation.add(new Square(posX, posY+i));
+                tempLocation.add(new Square(posY+i, posX));
         }
     }
 
@@ -80,10 +80,13 @@ public class Field {
         setTempLocation(ship.length, bowX, bowY, horizontal);
 
         //Step 2.) Check if ship overlaps another ship
+        //TODO: prio=low -> check wether this code doesn't need to check if there are no ships on the field.
+
         for(Square square : tempLocation){
            if(shipPresentOnLocation(square.getPosX(), square.getPosY()))
                return false;
         }
+
         //region oude code
         // Check for coliding ships or if Ship is outside of playingfield
         //        for(int i = 0; i < ship.length; i++){
@@ -104,8 +107,9 @@ public class Field {
     }
 
     private boolean shipPresentOnLocation(int x, int y) {
-
+        //look at all the ships in the field
         for(Ship ship : ships){
+        //look at all the squares of the ship
             for(Square square : ship.getLocation()){
                 if(square.getPosX() == x && square.getPosY() == y){
                     return true;
