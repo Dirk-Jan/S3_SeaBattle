@@ -29,7 +29,7 @@ public class SimpleStrategy implements IStrategy {
 //    }
 
     public Square fireShot(){
-        int min = 1, max = 10;
+        int min = 0, max = 9;
         int x = random.nextInt(max - min + 1) + min;
         int y = random.nextInt(max - min + 1) + min;
         return new Square(y, x);

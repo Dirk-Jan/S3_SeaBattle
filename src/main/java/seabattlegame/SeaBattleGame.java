@@ -58,8 +58,6 @@ public class SeaBattleGame implements ISeaBattleGame {
             }
         }
         return false;
-        //throw new NotImplementedException();
-
     }
 
     @Override
@@ -69,7 +67,6 @@ public class SeaBattleGame implements ISeaBattleGame {
             return player.placeShip(shipType, bowX, bowY, horizontal);
         }
         return false;
-
     }
 
     @Override
@@ -125,8 +122,6 @@ public class SeaBattleGame implements ISeaBattleGame {
             if(receivingPlayer != null) {
                 shotType = receivingPlayer.receiveShot(posX, posY);
             }
-
-
         }
 
         SquareState squareState = SquareState.WATER;
@@ -134,6 +129,8 @@ public class SeaBattleGame implements ISeaBattleGame {
             squareState = SquareState.SHOTHIT;
         }else if(shotType == ShotType.MISSED){
             squareState = SquareState.SHOTMISSED;
+        }else if(shotType == ShotType.SUNK){
+            squareState = SquareState.SHIPSUNK;
         }
 
         firingPlayer.gui.showSquareOpponent(playerNr, posX, posY, squareState);
@@ -151,8 +148,6 @@ public class SeaBattleGame implements ISeaBattleGame {
         Player Player = getPlayerByNumber(playerNr);
         if(Player != null) {
             Square randomSquare = new SimpleStrategy().fireShot();
-            //return Player.receiveShot(randomSquare.getPosX(),randomSquare.getPosY()); // TODO Implement recieveShot in Player
-
 
             shotType = Player.receiveShot(randomSquare.getPosX(), randomSquare.getPosY());
 
@@ -161,23 +156,38 @@ public class SeaBattleGame implements ISeaBattleGame {
                 squareState = SquareState.SHOTHIT;
             }else if(shotType == ShotType.MISSED){
                 squareState = SquareState.SHOTMISSED;
+            }else if(shotType == ShotType.SUNK){
+                squareState = SquareState.SHIPSUNK;
+            }
+
+            if(squareState == SquareState.SHIPSUNK){
+                // Color every square squarestate SHIPSUNK
+                for(Square s : Player.getShipLocation(randomSquare.getPosX(), randomSquare.getPosY())){
+                    players.get(0).gui.showSquarePlayer(playerNr, s.getPosX(), s.getPosY(), squareState);
+                }
+            } else {
+                players.get(0).gui.showSquarePlayer(playerNr, randomSquare.getPosX(), randomSquare.getPosY(), squareState);
             }
 
             players.get(0).gui.opponentFiresShot(0, shotType);
 
-            players.get(0).gui.showSquarePlayer(playerNr, randomSquare.getPosX(), randomSquare.getPosY(), squareState);
         }
 
 
         return shotType;
-//throw new NotImplementedException();
-//        return fireShotPlayer(playerNr, 0,0);
     }
 
     @Override
     public boolean startNewGame(int playerNr) {
+        for(int x=0;x<9;x++){
+            for(int y=0;y<9;y++){
+                players.get(0).gui.showSquarePlayer(0, x, y, SquareState.WATER);
+                players.get(0).gui.showSquareOpponent(0, x, y, SquareState.WATER);
+            }
+        }
+        players.get(0).gui.setPlayerName(0, "PlayerName");
+        players.get(0).gui.setOpponentName(0, "OpponentName");
         players = new ArrayList<Player>();
-        // TODO Probably need to close and reopen some GUIs too
-        throw new NotImplementedException();
+        return true;
     }
 }

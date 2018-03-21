@@ -18,7 +18,7 @@ public class Player {
 
     private boolean readyToStart = false;
 
-    private Field field;
+    protected Field field;
 
     public ISeaBattleGUI gui;
 
@@ -226,7 +226,17 @@ public class Player {
 
 
     public ShotType receiveShot(int posX, int posY) {
-        // TODO Implement receiveShot
-        return ShotType.MISSED;
+//        boolean shotHit = field.shipPresentOnLocation(posX, posY);
+//        return field.registerShot(posX, posY);
+        ShotType shotType = field.registerShot(posX, posY);
+        if(shotType == ShotType.SUNK){
+
+        }
+        return shotType;
+//        return shotHit ? ShotType.HIT : ShotType.MISSED;
+    }
+
+    public List<Square> getShipLocation(int x, int y){
+        return field.getShipLocation(x, y);
     }
 }

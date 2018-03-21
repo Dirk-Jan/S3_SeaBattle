@@ -1,5 +1,9 @@
 package domain;
 
+import seabattlegui.ISeaBattleGUI;
+import seabattlegui.ShotType;
+import seabattlegui.SquareState;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +13,7 @@ public class Field {
     private List<Square> squares = new ArrayList<Square>();
     private List<Ship> ships = new ArrayList<Ship>();
     private List<Square> tempLocation;
+    private int shipsSunk = 0;
 
 
     public Field() {
@@ -103,7 +108,18 @@ public class Field {
         return true;
     }
 
-    private boolean shipPresentOnLocation(int x, int y) {
+    public List<Square> getShipLocation(int x, int y){
+        for(Ship ship : ships){
+            for(Square square : ship.getLocation()){
+                if(square.getPosX() == x && square.getPosY() == y){
+                    return ship.getLocation();
+                }
+            }
+        }
+        return new ArrayList<Square>();
+    }
+
+    public boolean shipPresentOnLocation(int x, int y) {
 
         for(Ship ship : ships){
             for(Square square : ship.getLocation()){
@@ -113,5 +129,45 @@ public class Field {
             }
         }
         return false;
+    }
+
+    public ShotType registerShot(int x, int y){
+        for(Ship ship : ships){
+            for(Square square : ship.getLocation()){
+                if(square.getPosX() == x && square.getPosY() == y){
+                    if(ship.isSunk()){
+                        return ShotType.SUNK;
+                    }
+
+                    // Ship is geraakt, pas de square aan
+                    square.setSquareState(SquareState.SHOTHIT);
+
+                    // Ship is geraakt, check of ie ook zinkt
+                    boolean allShipSquaresHit = true;
+                    for(Square square1 : ship.getLocation()){
+                        if(square1.getSquareState() != SquareState.SHOTHIT){
+                            allShipSquaresHit = false;
+                            break;
+                        }
+                    }
+
+                    if(allShipSquaresHit) {
+                        // Schip gezonken, zet sunk naar true
+                        ship.setSunk(true);
+
+                        shipsSunk++;
+                        // Check of alle schepen nou gezonken zijn
+                        if (shipsSunk == ships.size()) {
+                            return ShotType.ALLSUNK;
+                        }
+
+                        return ShotType.SUNK;
+                    }
+                    return ShotType.HIT;
+
+                }
+            }
+        }
+        return ShotType.MISSED;
     }
 }
