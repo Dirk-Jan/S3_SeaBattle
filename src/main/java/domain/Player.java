@@ -20,7 +20,7 @@ public class Player {
 
     private Field field;
 
-    public ISeaBattleGUI gui;
+    private ISeaBattleGUI gui;
 
     public boolean isReadyToStart() {
         return readyToStart;
@@ -227,6 +227,6 @@ public class Player {
 
     public ShotType receiveShot(int posX, int posY) {
         // TODO Implement receiveShot
-        return ShotType.MISSED;
+        throw new NotImplementedException();
     }
 }

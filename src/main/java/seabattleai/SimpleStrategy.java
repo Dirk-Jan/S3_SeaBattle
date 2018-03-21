@@ -13,26 +13,19 @@ public class SimpleStrategy implements IStrategy {
     }
 
 
-//    public Field fireShot(Square square) {
-//        Field position = new Field();
-////        SquareState state;
-////        do {
-////            int x = random.nextInt(square.getPosX());
-////            int y = random.nextInt(square.getPosY());
-////            position = square.getPosition(x,y);
-////            state = position.getState();
-////        } while (state == SquareState.SHOTHIT ||
-////                state == SquareState.SHOTMISSED ||
-////                state == SquareState.SHIPSUNK);
-//
-//        return position;
-//    }
+    public Field fireShot(Square square) {
+        Field position = new Field();
+//        SquareState state;
+//        do {
+//            int x = random.nextInt(square.getPosX());
+//            int y = random.nextInt(square.getPosY());
+//            position = square.getPosition(x,y);
+//            state = position.getState();
+//        } while (state == SquareState.SHOTHIT ||
+//                state == SquareState.SHOTMISSED ||
+//                state == SquareState.SHIPSUNK);
 
-    public Square fireShot(){
-        int min = 1, max = 10;
-        int x = random.nextInt(max - min + 1) + min;
-        int y = random.nextInt(max - min + 1) + min;
-        return new Square(y, x);
+        return position;
     }
 
 }
