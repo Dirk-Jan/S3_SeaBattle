@@ -47,6 +47,18 @@ public class SeaBattleGame implements ISeaBattleGame {
             players.add(new CPUPlayer(1));  // CPU has always playerNr 1, because the human player registers first
         }
 
+        // Set name in the GUIs of the players
+        if(player.getPlayerNr() == 0){
+            application.setPlayerName(0, name);
+            if(singlePlayerMode){
+                application.setOpponentName(0, "CPU");
+            }
+        }else{
+            application.setPlayerName(1,name);
+            application.setOpponentName(1, players.get(0).getName());
+            players.get(0).getGui().setOpponentName(0, name);
+        }
+
         return player.getPlayerNr();
     }
 
@@ -133,10 +145,10 @@ public class SeaBattleGame implements ISeaBattleGame {
                 squareState = SquareState.SHIPSUNK;
             }
 
-            ISeaBattleGUI receivingPlayerGui = players.get(receivingPlayerNr).gui;
+            ISeaBattleGUI receivingPlayerGui = players.get(receivingPlayerNr).getGui();
             int firingPlayerNr = receivingPlayerNr == 0 ? 1 : 0;
             Player firingPlayer = players.get(firingPlayerNr);
-            ISeaBattleGUI firingPlayerGui = players.get(firingPlayerNr).gui;
+            ISeaBattleGUI firingPlayerGui = players.get(firingPlayerNr).getGui();
 
             if(squareState == SquareState.SHIPSUNK){
                 // Color every square squarestate SHIPSUNK
@@ -177,8 +189,8 @@ public class SeaBattleGame implements ISeaBattleGame {
     public boolean startNewGame(int playerNr) {
         for(int x=0;x<10;x++){
             for(int y=0;y<10;y++){
-                players.get(0).gui.showSquarePlayer(0, x, y, SquareState.WATER);
-                players.get(0).gui.showSquareOpponent(0, x, y, SquareState.WATER);
+                players.get(0).getGui().showSquarePlayer(0, x, y, SquareState.WATER);
+                players.get(0).getGui().showSquareOpponent(0, x, y, SquareState.WATER);
             }
         }
 //        players.get(0).gui.setPlayerName(0, "PlayerName");

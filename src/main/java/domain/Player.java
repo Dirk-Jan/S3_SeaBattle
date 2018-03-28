@@ -20,7 +20,17 @@ public class Player {
 
     protected Field field;
 
-    public ISeaBattleGUI gui;
+    public ISeaBattleGUI getGui() {
+        return gui;
+    }
+
+    private ISeaBattleGUI gui;
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
 
     public boolean isReadyToStart() {
         return readyToStart;
