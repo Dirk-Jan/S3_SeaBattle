@@ -141,8 +141,9 @@ public class Field {
         for(Ship ship : ships){
             for(Square square : ship.getLocation()){
                 if(square.getPosX() == x && square.getPosY() == y){
+                    // Check if ship was already sunken, if so --> shot missed
                     if(ship.isSunk()){
-                        return ShotType.SUNK;
+                        return ShotType.MISSED;     // Cannot return ShotType.SUNK again, it will then show the messagebox that a player sunk the ship
                     }
 
                     // Ship is geraakt, pas de square aan

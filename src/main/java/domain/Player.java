@@ -158,12 +158,16 @@ public class Player {
         List<Square> location = new ArrayList<Square>();
         for(int i =0; i < ship.length; i++){
             if(horizontal){
-                gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                if(gui != null) {
+                    gui.showSquarePlayer(this.playerNr, bowX, bowY, SquareState.SHIP);
+                }
                 location.add(new Square(bowY, bowX));
                 bowX++;
             }
             else{
-                gui.showSquarePlayer(this.playerNr, bowX,bowY, SquareState.SHIP);
+                if(gui != null) {
+                    gui.showSquarePlayer(this.playerNr, bowX, bowY, SquareState.SHIP);
+                }
                 location.add(new Square(bowY, bowX));
                 bowY++;
             }
@@ -238,5 +242,9 @@ public class Player {
 
     public List<Square> getShipLocation(int x, int y){
         return field.getShipLocation(x, y);
+    }
+
+    public boolean shipPresentOnLocation(int x, int y){
+        return field.shipPresentOnLocation(x, y);
     }
 }

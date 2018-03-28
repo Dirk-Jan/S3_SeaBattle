@@ -27,6 +27,7 @@ public class SeaBattleGame implements ISeaBattleGame {
     private List<Player> players = new ArrayList<Player>();
     private boolean singlePlayerMode = true;
 
+
     private Player getPlayerByNumber(int playerNr) {
         for(Player player : players){
             if(player.getPlayerNr() == playerNr){
@@ -43,7 +44,7 @@ public class SeaBattleGame implements ISeaBattleGame {
         players.add(player);
 
         if(singlePlayerMode){
-            players.add(new CPUPlayer(1));
+            players.add(new CPUPlayer(1));  // CPU has always playerNr 1, because the human player registers first
         }
 
         return player.getPlayerNr();
@@ -91,65 +92,37 @@ public class SeaBattleGame implements ISeaBattleGame {
     public boolean notifyWhenReady(int playerNr) {
         Player player = getPlayerByNumber(playerNr);
         if(player != null) {
-//            player.setReadyToStart(true);//TODO notifywhenready: players set readysate should return a boolean. True when all ships are placed and false if not.
-//            fireShotPlayer(playerNr, 0,0);
+            if(singlePlayerMode){
+                return true;
+            }
 
-//            if(singlePlayerMode){
-//                //registerPlayer("CPU", new )
-//                return true;
-//            } else {
-//                // Check if the other player is also ready
-//                if(players.get(playerNr == 0 ? 1 : 0).isReadyToStart()) {
-//                    return true;
-//                }
-//            }
-            return true;
+            // Multiplayer, set readystate to true and check if the other player is also ready to rumble
+            player.setReadyToStart(true);
+            if(players.get(playerNr == 0 ? 1 : 0).isReadyToStart()){
+                return true;
+            }
         }
         return false;
-        // Check of alle schepen zijn geplaatst
-        // Check of elke speler klaar is
-        // Beide ja, true terug
     }
 
     @Override
     public ShotType fireShotPlayer(int playerNr, int posX, int posY) {
-        ShotType shotType = ShotType.MISSED;
-        Player firingPlayer = getPlayerByNumber(playerNr);
-        if(firingPlayer != null) {
-            firingPlayer.fireShot(posX, posY);
-
-            Player receivingPlayer = getPlayerByNumber(playerNr == 0 ? 1 : 0);
-            if(receivingPlayer != null) {
-                shotType = receivingPlayer.receiveShot(posX, posY);
-            }
-        }
-
-        SquareState squareState = SquareState.WATER;
-        if(shotType == ShotType.HIT){
-            squareState = SquareState.SHOTHIT;
-        }else if(shotType == ShotType.MISSED){
-            squareState = SquareState.SHOTMISSED;
-        }else if(shotType == ShotType.SUNK){
-            squareState = SquareState.SHIPSUNK;
-        }
-
-        firingPlayer.gui.showSquareOpponent(playerNr, posX, posY, squareState);
-
-        return shotType;
-
-        // Check if player hits enemy and get shottype back
-        // Paint squares
-
+        return receiveFiredShot(playerNr == 0 ? 1 : 0, posX, posY);
     }
 
     @Override
-    public ShotType fireShotOpponent(int playerNr) {    // Only used in singleplayer, playerNr is the human Player
-        ShotType shotType = ShotType.MISSED;
-        Player Player = getPlayerByNumber(playerNr);
-        if(Player != null) {
-            Square randomSquare = new SimpleStrategy().fireShot();
+    public ShotType fireShotOpponent(int playerNr) {
+        Square randomSquare = new SimpleStrategy().fireShot();
 
-            shotType = Player.receiveShot(randomSquare.getPosX(), randomSquare.getPosY());
+        return receiveFiredShot(playerNr, randomSquare.getPosX(), randomSquare.getPosY());
+    }
+
+    private ShotType receiveFiredShot(int receivingPlayerNr, int x, int y){
+        ShotType shotType = ShotType.MISSED;
+        Player receivingPlayer = getPlayerByNumber(receivingPlayerNr);
+        if(receivingPlayer != null) {
+
+            shotType = receivingPlayer.receiveShot(x, y);
 
             SquareState squareState = SquareState.WATER;
             if(shotType == ShotType.HIT){
@@ -160,33 +133,56 @@ public class SeaBattleGame implements ISeaBattleGame {
                 squareState = SquareState.SHIPSUNK;
             }
 
+            ISeaBattleGUI receivingPlayerGui = players.get(receivingPlayerNr).gui;
+            int firingPlayerNr = receivingPlayerNr == 0 ? 1 : 0;
+            Player firingPlayer = players.get(firingPlayerNr);
+            ISeaBattleGUI firingPlayerGui = players.get(firingPlayerNr).gui;
+
             if(squareState == SquareState.SHIPSUNK){
                 // Color every square squarestate SHIPSUNK
-                for(Square s : Player.getShipLocation(randomSquare.getPosX(), randomSquare.getPosY())){
-                    players.get(0).gui.showSquarePlayer(playerNr, s.getPosX(), s.getPosY(), squareState);
+                for(Square s : receivingPlayer.getShipLocation(x, y)){
+                    if(!(receivingPlayer instanceof CPUPlayer)) {
+                        receivingPlayerGui.showSquarePlayer(receivingPlayerNr, s.getPosX(), s.getPosY(), squareState);
+                    }
+                    if(!(firingPlayer instanceof CPUPlayer)) {
+                        firingPlayerGui.showSquareOpponent(firingPlayerNr, s.getPosX(), s.getPosY(), squareState);
+                    }
                 }
             } else {
-                players.get(0).gui.showSquarePlayer(playerNr, randomSquare.getPosX(), randomSquare.getPosY(), squareState);
+                // SquareState is MISSED, but ship is present on that location --> means that that ship has already sunken
+                // return ShotType.SUNK from the method, the GUI will show a messagebox that the player sunk a ship, even though it was already sunken
+                // So that's why we give back a shot missed and check for it here, so the ships don'' get the shot missed color on the GUI
+                if(squareState == SquareState.SHOTMISSED && receivingPlayer.shipPresentOnLocation(x, y)){
+                    squareState = SquareState.SHIPSUNK;
+                }
+
+                if(!(receivingPlayer instanceof CPUPlayer)) {
+                    receivingPlayerGui.showSquarePlayer(receivingPlayerNr, x, y, squareState);
+                }
+                if(!(firingPlayer instanceof CPUPlayer)) {
+                    firingPlayerGui.showSquareOpponent(firingPlayerNr, x, y, squareState);
+                }
             }
 
-            players.get(0).gui.opponentFiresShot(0, shotType);
+            if(!(receivingPlayer instanceof CPUPlayer)) {
+                receivingPlayerGui.opponentFiresShot(receivingPlayerNr, shotType);
+            }
 
         }
-
 
         return shotType;
     }
 
     @Override
     public boolean startNewGame(int playerNr) {
-        for(int x=0;x<9;x++){
-            for(int y=0;y<9;y++){
+        for(int x=0;x<10;x++){
+            for(int y=0;y<10;y++){
                 players.get(0).gui.showSquarePlayer(0, x, y, SquareState.WATER);
                 players.get(0).gui.showSquareOpponent(0, x, y, SquareState.WATER);
             }
         }
-        players.get(0).gui.setPlayerName(0, "PlayerName");
-        players.get(0).gui.setOpponentName(0, "OpponentName");
+//        players.get(0).gui.setPlayerName(0, "PlayerName");
+//        players.get(0).gui.setOpponentName(0, "OpponentName");
         players = new ArrayList<Player>();
         return true;
     }
