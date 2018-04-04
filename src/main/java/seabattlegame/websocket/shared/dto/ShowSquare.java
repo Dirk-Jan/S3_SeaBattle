@@ -22,8 +22,8 @@ public class ShowSquare extends DataTransferObject{
         return squareState;
     }
 
-    public ShowSquare(int playerNr, int x, int y, SquareState squareState) {
-        super("showsquare");
+    public ShowSquare(int playerNr, int x, int y, SquareState squareState, boolean player) {
+        super(player ? DTOType.SHOWSQUAREPLAYER : DTOType.SHOWSQUAREOPPONENT);
         this.playerNr = playerNr;
         this.x = x;
         this.y = y;

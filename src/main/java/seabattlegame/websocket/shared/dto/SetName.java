@@ -12,8 +12,8 @@ public class SetName extends DataTransferObject {
         return name;
     }
 
-    public SetName(int playerNr, String name) {
-        super("setname");
+    public SetName(int playerNr, String name, boolean player) {
+        super(player ? DTOType.SETPLAYERNAME : DTOType.SETOPPONENTNAME);
         this.playerNr = playerNr;
         this.name = name;
     }

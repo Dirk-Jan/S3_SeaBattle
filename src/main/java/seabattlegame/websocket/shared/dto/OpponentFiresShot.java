@@ -15,7 +15,7 @@ public class OpponentFiresShot extends DataTransferObject{
     }
 
     public OpponentFiresShot(int playerNr, ShotType shotType) {
-        super("opponentfiresshot");
+        super(DTOType.OPPONENTFIRESSHOT);
         this.playerNr = playerNr;
         this.shotType = shotType;
     }

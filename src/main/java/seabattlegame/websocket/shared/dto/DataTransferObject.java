@@ -1,13 +1,9 @@
 package seabattlegame.websocket.shared.dto;
 
 public class DataTransferObject {
-    private String function;
+    private DTOType type;
 
-    public String getFunction() {
-        return function;
-    }
-
-    public DataTransferObject(String function) {
-        this.function = function;
+    public DataTransferObject(DTOType type) {
+        this.type = type;
     }
 }
