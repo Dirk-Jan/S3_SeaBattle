@@ -3,12 +3,11 @@ package seabattlegame.rest.server;
 import seabattlegame.ISeaBattleGame;
 import seabattlegame.SeaBattleGame;
 import seabattlegui.ISeaBattleGUI;
-import seabattlegui.SeaBattleGUIWebSocketServer;
+import seabattlegui.SeaBattleGuiCommunicationToClient;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
@@ -20,7 +19,7 @@ public class SeaBattleService {
     @GET
     @Path("/registerPlayer/{name},{singlePlayerMode}")
     public Response registerPlayer(@PathParam("name") String name, @PathParam("singlePlayerMode") boolean singlePlayerMode){
-        ISeaBattleGUI gui = new SeaBattleGUIWebSocketServer(0);
+        ISeaBattleGUI gui = new SeaBattleGuiCommunicationToClient();
         int playerNr = game.registerPlayer(name, gui, singlePlayerMode);       //TODO this GUI should be a websocket
         return Response.status(200).entity(playerNr).build();
     }

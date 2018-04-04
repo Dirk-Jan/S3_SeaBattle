@@ -6,18 +6,15 @@ import seabattlegame.websocket.shared.dto.OpponentFiresShot;
 import seabattlegame.websocket.shared.dto.SetName;
 import seabattlegame.websocket.shared.dto.ShowSquare;
 
-public class SeaBattleGUIWebSocketServer implements ISeaBattleGUI{
-    private int playerNr;
+public class SeaBattleGuiCommunicationToClient implements ISeaBattleGUI{
 
-
-    public SeaBattleGUIWebSocketServer(int playerNr) {
-        this.playerNr = playerNr;
+    public SeaBattleGuiCommunicationToClient() {
     }
 
     @Override
     public void setPlayerName(int playerNr, String name) {
         SetName setName = new SetName(playerNr, name, true);
-        String message = new Gson().toJson(setName);
+        String message = new Gson().toJson(setName);    // TODO use converter
         EventServerSocket.broadcastMessage(message);
     }
 

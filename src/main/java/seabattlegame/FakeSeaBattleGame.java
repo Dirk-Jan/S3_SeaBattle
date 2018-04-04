@@ -4,7 +4,7 @@ import seabattlegui.ISeaBattleGUI;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
-public class WebSocketSeaBattleGameClient implements ISeaBattleGame {
+public class FakeSeaBattleGame implements ISeaBattleGame {
     @Override
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode) {
         return 0;
