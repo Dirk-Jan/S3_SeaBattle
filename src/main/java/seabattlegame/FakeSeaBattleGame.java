@@ -1,13 +1,16 @@
 package seabattlegame;
 
+import seabattlegame.rest.client.RESTSeaClient;
 import seabattlegui.ISeaBattleGUI;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
 public class FakeSeaBattleGame implements ISeaBattleGame {
+    RESTSeaClient cli = new RESTSeaClient();
+
     @Override
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode) {
-        return 0;
+        return cli.registerPlayer(name, singlePlayerMode);
     }
 
     @Override
