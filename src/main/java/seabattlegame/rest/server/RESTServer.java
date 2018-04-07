@@ -10,7 +10,7 @@ public class RESTServer {
     public void run() {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
-        Server jettyServer = new Server(8091);
+        Server jettyServer = new Server(8090);
         jettyServer.setHandler(context);
         ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/*");
         jerseyServlet.setInitOrder(0);

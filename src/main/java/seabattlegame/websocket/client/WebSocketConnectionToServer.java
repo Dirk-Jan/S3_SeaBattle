@@ -18,7 +18,7 @@ public class WebSocketConnectionToServer extends Observable {
     private Session session;
 
     public void createConnection(){
-        URI uri = URI.create("ws://localhost:8094/seabattlegame/");
+        URI uri = URI.create("ws://localhost:8095/seabattlegame/");
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             try {
