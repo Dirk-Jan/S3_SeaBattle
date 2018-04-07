@@ -15,41 +15,41 @@ public class FakeSeaBattleGame implements ISeaBattleGame {
 
     @Override
     public boolean placeShipsAutomatically(int playerNr) {
-        return false;
+        return cli.placeShipsAutomatically(playerNr);
     }
 
     @Override
     public boolean placeShip(int playerNr, ShipType shipType, int bowX, int bowY, boolean horizontal) {
-        return false;
+        return cli.placeShip(playerNr, shipType, bowX, bowY, horizontal);
     }
 
     @Override
     public boolean removeShip(int playerNr, int posX, int posY) {
-        return false;
+        return cli.removeShip(playerNr, posX, posY);
     }
 
     @Override
     public boolean removeAllShips(int playerNr) {
-        return false;
+        return cli.removeAllShips(playerNr);
     }
 
     @Override
     public boolean notifyWhenReady(int playerNr) {
-        return false;
+        return cli.notifyWhenReady(playerNr);
     }
 
     @Override
     public ShotType fireShotPlayer(int playerNr, int posX, int posY) {
-        return null;
+        return cli.fireShotPlayer(playerNr, posX, posY);
     }
 
     @Override
     public ShotType fireShotOpponent(int playerNr) {
-        return null;
+        return cli.fireShotOpponent(playerNr);
     }
 
     @Override
     public boolean startNewGame(int playerNr) {
-        return false;
+        return cli.startNewGame(playerNr);
     }
 }

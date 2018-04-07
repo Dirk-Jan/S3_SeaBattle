@@ -94,22 +94,22 @@ public class RESTLocalCalculator implements ICalculator {
         // Perform the query
         HttpGet httpGet = new HttpGet(query);
 
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();
-             CloseableHttpResponse response = httpClient.execute(httpGet);)
-        {
-            System.out.println("[Status Line] : " + response.getStatusLine());
-            HttpEntity entity = response.getEntity();
-            final String entityString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entityString);
-            Gson gson = new Gson();
-            Response jsonResponse = gson.fromJson(entityString,Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Integer.parseInt(stringResult);
-        } catch (IOException e) {
-            // Evil, pure evil this solution: ....
-            System.out.println("IOException : " + e.toString());
-        }
+//        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+//             CloseableHttpResponse response = httpClient.execute(httpGet);)
+//        {
+//            System.out.println("[Status Line] : " + response.getStatusLine());
+//            HttpEntity entity = response.getEntity();
+//            final String entityString = EntityUtils.toString(entity);
+//            System.out.println("[Entity] : " + entityString);
+//            Gson gson = new Gson();
+//            Response jsonResponse = gson.fromJson(entityString,Response.class);
+//            String stringResult = jsonResponse.getResult();
+//            System.out.println("[Result] : " + stringResult );
+//            result = Integer.parseInt(stringResult);
+//        } catch (IOException e) {
+//            // Evil, pure evil this solution: ....
+//            System.out.println("IOException : " + e.toString());
+//        }
 
         return result;
     }

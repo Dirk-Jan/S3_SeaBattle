@@ -7,6 +7,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import seabattlegui.ShipType;
+import seabattlegui.ShotType;
 
 import java.io.IOError;
 import java.io.IOException;
@@ -26,19 +28,19 @@ public class RESTSeaClient {
         int result = -1;
 
         String query = String.format(standardURL + "/registerPlayer/%s,%s", name, singlePlayerMode);
+        System.out.println("TEST FORMAT: " + query);
 
         HttpGet httpget = new HttpGet(query);
 
-        try {
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
-
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+             CloseableHttpResponse httpResponse = httpClient.execute(httpget);)
+        {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
-            final String entityString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entityString);
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
             Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entityString,RESTLocalCalculator.Response.class);
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
             String stringResult = jsonResponse.getResult();
             System.out.println("[Result] : " + stringResult );
             result = Integer.parseInt(stringResult);
@@ -57,16 +59,15 @@ public class RESTSeaClient {
 
         HttpGet httpget = new HttpGet(query);
 
-        try {
-            CloseableHttpClient httpClient = HttpClients.createDefault();
-            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
-
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+             CloseableHttpResponse httpResponse = httpClient.execute(httpget);)
+        {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
-            final String entityString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entityString);
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
             Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entityString,RESTLocalCalculator.Response.class);
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
             String stringResult = jsonResponse.getResult();
             System.out.println("[Result] : " + stringResult );
             result = Boolean.parseBoolean(stringResult);
@@ -78,5 +79,200 @@ public class RESTSeaClient {
         return result;
     }
 
+    public boolean placeShip(int playerNr, ShipType shipType, int bowX, int bowY, boolean horizontal){
+        boolean result = false;
+
+        String query = String.format(standardURL + "/placeShip/%s,%s,%s,%s,%s", playerNr, shipType, bowX, bowY, horizontal);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = Boolean.parseBoolean(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    public boolean removeShip(int playerNr, int posX, int posY){
+        boolean result = false;
+
+        String query = String.format(standardURL + "/removeShip/%s,%s,%s", playerNr, posX, posY);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = Boolean.parseBoolean(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    public boolean removeAllShips(int playerNr){
+        boolean result = false;
+
+        String query = String.format(standardURL + "/removeAllShips/%s", playerNr);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = Boolean.parseBoolean(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    public boolean notifyWhenReady(int playerNr){
+        boolean result = false;
+
+        String query = String.format(standardURL + "/notifyWhenReady/%s", playerNr);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = Boolean.parseBoolean(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    public ShotType fireShotPlayer(int playerNr, int posX, int posY){
+        ShotType result = ShotType.MISSED;
+
+        String query = String.format(standardURL + "/fireShotPlayer/%s,%s,%s", playerNr, posX, posY);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = ShotType.valueOf(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    public ShotType fireShotOpponent(int playerNr){
+        ShotType result = ShotType.MISSED;
+
+        String query = String.format(standardURL + "/fireShotPlayer/%s,", playerNr);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = ShotType.valueOf(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    public boolean startNewGame(int playerNr){
+        boolean result = false;
+
+        String query = String.format(standardURL + "/startNewGame/%s,", playerNr);
+
+        HttpGet httpget = new HttpGet(query);
+
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            CloseableHttpResponse httpResponse = httpClient.execute(httpget);
+
+            System.out.println("[Status Line] : " + httpResponse.getStatusLine());
+            HttpEntity entity = httpResponse.getEntity();
+            final String entString = EntityUtils.toString(entity);
+            System.out.println("[Entity] : " + entString);
+            Gson gson = new Gson();
+            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
+            String stringResult = jsonResponse.getResult();
+            System.out.println("[Result] : " + stringResult );
+            result = Boolean.parseBoolean(stringResult);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
+        return result;
+    }
 
 }
