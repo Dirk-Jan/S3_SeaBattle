@@ -15,10 +15,37 @@ import java.io.IOException;
 
 public class RESTSeaClient {
 
-//    class Response{
-//        private String result = "na";
-//
-//    }
+    class Response {
+
+        private String operation = "n/a";
+        private String expression = "n/a";
+        private String result = "n/a";
+
+        public String getOperation() {
+            return operation;
+        }
+
+        public void setOperation(String operation) {
+            this.operation = operation;
+        }
+
+        public String getExpression() {
+            return expression;
+        }
+
+        public void setExpression(String expression) {
+            this.expression = expression;
+        }
+
+        public String getResult() {
+            return result;
+        }
+
+        public void setResult(String result) {
+            this.result = result;
+        }
+    }
+
 
     //TODO: HIGH -> Check localhost port number
     private String standardURL =  "http://localhost:8090/seabattle";
@@ -38,12 +65,10 @@ public class RESTSeaClient {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
+
             System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Integer.parseInt(stringResult);
+
+            result = Integer.parseInt(entString);
         }
         catch(Exception e){
             System.out.println(e);
@@ -65,12 +90,8 @@ public class RESTSeaClient {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Boolean.parseBoolean(stringResult);
+
+            result = Boolean.parseBoolean(entString);
         }
         catch(Exception e){
             System.out.println(e);
@@ -93,12 +114,8 @@ public class RESTSeaClient {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Boolean.parseBoolean(stringResult);
+
+            result = Boolean.parseBoolean(entString);
         }
         catch(Exception e){
             System.out.println(e);
@@ -121,12 +138,8 @@ public class RESTSeaClient {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Boolean.parseBoolean(stringResult);
+
+            result = Boolean.parseBoolean(entString);
         }
         catch(Exception e){
             System.out.println(e);
@@ -149,12 +162,8 @@ public class RESTSeaClient {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Boolean.parseBoolean(stringResult);
+
+            result = Boolean.parseBoolean(entString);
         }
         catch(Exception e){
             System.out.println(e);
@@ -177,12 +186,8 @@ public class RESTSeaClient {
             System.out.println("[Status Line] : " + httpResponse.getStatusLine());
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
-            System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = Boolean.parseBoolean(stringResult);
+
+            result = Boolean.parseBoolean(entString);
         }
         catch(Exception e){
             System.out.println(e);
