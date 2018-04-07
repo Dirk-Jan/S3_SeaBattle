@@ -13,7 +13,8 @@ public class CalculatorClientExample {
 
         RESTSeaClient cli = new RESTSeaClient();
 
-        cli.registerPlayer("Daphne", false);
+        int test = cli.registerPlayer("Daphne", false);
+        System.out.println("Output Registerplayer: " + test);
         cli.placeShipsAutomatically(1);
     }
 
