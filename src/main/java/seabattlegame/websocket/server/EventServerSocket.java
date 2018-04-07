@@ -15,7 +15,7 @@ import java.util.*;
  * @author Nico Kuijpers, copied from github, adapted by Marcel Koonen
  */
 
-@ServerEndpoint(value = "/wstest/")
+@ServerEndpoint(value = "/seabattlegame/")
 public class EventServerSocket {
     private static HashSet<Session> sessions = new HashSet<>();
     @OnOpen

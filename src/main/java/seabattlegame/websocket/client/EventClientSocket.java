@@ -15,12 +15,33 @@ import java.util.Observable;
  */
 @ClientEndpoint
 public class EventClientSocket extends Observable{
+
+    private static EventClientSocket instance = null;
+
+    /**
+     * Get singleton instance of this class.
+     * Ensure that only one instance of this class is created.
+     * @return instance of client web socket
+     */
+    public static EventClientSocket getInstance() {
+        if (instance == null) {
+            System.out.println("[WebSocket Client create singleton instance]");
+            instance = new EventClientSocket();
+        }
+        return instance;
+    }
+
+    public EventClientSocket() {
+//        System.out.println("Instance of EventCLientSocket created");
+    }
+
     @OnOpen
     public void onWebSocketConnect() {
         System.out.println("[Connected]");
     }
     @OnMessage
     public void onWebSocketText(String message) {
+//        System.out.println("Message received from server: " + message);
         setChanged();
         notifyObservers(message);
     }

@@ -20,11 +20,14 @@ public class MessageHandler implements Observer{
     //We kunnen geen DataTransferObject naar een child klasse casten vanuit JSON
     @Override
     public void update(Observable o, Object arg) {
+//        System.out.println("Message received via observer pattern in the MessageHandler: " + (String)arg);
         if(gui == null)
             return;
 
         String jsonObject = (String)arg;
         DataTransferObject dto = DTOJsonConverter.convertJsonToDTO(jsonObject);
+
+//        System.out.println("MessageHandler type received: " + dto.getType());
 
         switch(dto.getType()){
             case OPPONENTFIRESSHOT:
@@ -44,6 +47,7 @@ public class MessageHandler implements Observer{
                 gui.showSquarePlayer(showSquareO.getPlayerNr(), showSquareO.getX(), showSquareO.getY(), showSquareO.getSquareState());
                 break;
             case SHOWSQUAREPLAYER:
+//                System.out.println("A show square player message found.");
                 ShowSquare showSquareP = DTOJsonConverter.convertJsonToShowSquare(jsonObject);
                 gui.showSquarePlayer(showSquareP.getPlayerNr(), showSquareP.getX(), showSquareP.getY(), showSquareP.getSquareState());
                 break;

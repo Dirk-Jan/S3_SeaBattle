@@ -9,26 +9,38 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Observable;
 
-public class WebSocketConnectionToServer extends Observable {
+public class WebSocketConnectionToServer {
 
     public WebSocketConnectionToServer() {
 
     }
 
     private Session session;
+    private boolean stopSocket = false;
 
-    public void createConnection(){
+    public void startClientSocket(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                createConnection();
+            }
+        }).start();
+    }
+
+    private void createConnection(){
         URI uri = URI.create("ws://localhost:8095/seabattlegame/");
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             try {
                 // Attempt Connect
-                session = container.connectToServer(EventClientSocket.class, uri);
+                session = container.connectToServer(EventClientSocket.getInstance(), uri);
                 // Send a message
-//                session.getBasicRemote().sendText("Hello");
+                session.getBasicRemote().sendText("Hello there my lovely servert <3");
                 // Close session
 //                    Thread.sleep(10000);
 //                    session.close();
+                while(!stopSocket){}
+                session.close();
             } finally {
                 // Force lifecycle stop when done with container.
                 // This is to free up threads and resources that the
@@ -44,10 +56,6 @@ public class WebSocketConnectionToServer extends Observable {
     }
 
     public void closeConnection(){
-        try {
-            session.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stopSocket = true;
     }
 }

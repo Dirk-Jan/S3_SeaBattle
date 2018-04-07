@@ -1,9 +1,11 @@
 package seabattlegame;
 
 import seabattlegame.rest.client.RESTSeaClient;
+import seabattlegame.websocket.client.EventClientSocket;
 import seabattlegame.websocket.client.MessageHandler;
 import seabattlegame.websocket.client.WebSocketConnectionToServer;
 import seabattlegui.ISeaBattleGUI;
+import seabattlegui.SeaBattleGuiCommunicationToClient;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
@@ -13,8 +15,9 @@ public class FakeSeaBattleGame implements ISeaBattleGame {
     MessageHandler messageHandler = new MessageHandler();
 
     public FakeSeaBattleGame() {
-        webSocketConnectionToServer.addObserver(messageHandler);
-        webSocketConnectionToServer.createConnection();
+//        messageHandler.setGui(new SeaBattleGuiCommunicationToClient());
+        EventClientSocket.getInstance().addObserver(messageHandler);
+        webSocketConnectionToServer.startClientSocket();
 
     }
 
