@@ -2,6 +2,7 @@ package seabattlegame.websocket.client;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
+import java.util.Observable;
 
 // https://github.com/jetty-project/embedded-jetty-websocket-examples/tree/master/javax.websocket-example/src/main/java/org/eclipse/jetty/demo
 
@@ -13,14 +14,15 @@ import javax.websocket.server.ServerEndpoint;
  * @author Nico Kuijpers, copied from github, adpated by Marcel Koonen
  */
 @ClientEndpoint
-public class EventClientSocket {
+public class EventClientSocket extends Observable{
     @OnOpen
     public void onWebSocketConnect() {
         System.out.println("[Connected]");
     }
     @OnMessage
     public void onWebSocketText(String message) {
-        System.out.println("[Received]: " + message);
+        setChanged();
+        notifyObservers(message);
     }
     @OnClose
     public void onWebSocketClose(CloseReason reason) {
