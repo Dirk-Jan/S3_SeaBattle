@@ -7,16 +7,22 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class MessageHandler implements Observer{
-    private ISeaBattleGUI gui;
+    private ISeaBattleGUI gui = null;
 
-    public MessageHandler(ISeaBattleGUI gui) {
+    public void setGui(ISeaBattleGUI gui) {
         this.gui = gui;
+    }
+
+    public MessageHandler() {
     }
 
     //Klassen worden meerdere keren geconverteerd uit gemak
     //We kunnen geen DataTransferObject naar een child klasse casten vanuit JSON
     @Override
     public void update(Observable o, Object arg) {
+        if(gui == null)
+            return;
+
         String jsonObject = (String)arg;
         DataTransferObject dto = DTOJsonConverter.convertJsonToDTO(jsonObject);
 

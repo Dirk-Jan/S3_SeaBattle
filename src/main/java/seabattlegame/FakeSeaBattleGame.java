@@ -1,15 +1,26 @@
 package seabattlegame;
 
 import seabattlegame.rest.client.RESTSeaClient;
+import seabattlegame.websocket.client.MessageHandler;
+import seabattlegame.websocket.client.WebSocketConnectionToServer;
 import seabattlegui.ISeaBattleGUI;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
 public class FakeSeaBattleGame implements ISeaBattleGame {
     RESTSeaClient cli = new RESTSeaClient();
+    WebSocketConnectionToServer webSocketConnectionToServer = new WebSocketConnectionToServer();
+    MessageHandler messageHandler = new MessageHandler();
+
+    public FakeSeaBattleGame() {
+        webSocketConnectionToServer.addObserver(messageHandler);
+        webSocketConnectionToServer.createConnection();
+
+    }
 
     @Override
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode) {
+        messageHandler.setGui(application);
         return cli.registerPlayer(name, singlePlayerMode);
     }
 
