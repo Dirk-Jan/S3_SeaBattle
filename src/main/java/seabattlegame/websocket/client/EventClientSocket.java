@@ -41,7 +41,7 @@ public class EventClientSocket extends Observable{
     }
     @OnMessage
     public void onWebSocketText(String message) {
-//        System.out.println("Message received from server: " + message);
+        System.out.println("Message received from server: " + message);
         setChanged();
         notifyObservers(message);
     }

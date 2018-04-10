@@ -20,7 +20,7 @@ public class MessageHandler implements Observer{
     //We kunnen geen DataTransferObject naar een child klasse casten vanuit JSON
     @Override
     public void update(Observable o, Object arg) {
-//        System.out.println("Message received via observer pattern in the MessageHandler: " + (String)arg);
+        System.out.println("Message received via observer pattern in the MessageHandler: " + (String)arg);
         if(gui == null)
             return;
 
@@ -36,7 +36,7 @@ public class MessageHandler implements Observer{
                 break;
             case SETOPPONENTNAME:
                 SetName setNameP = DTOJsonConverter.convertJsonToSetName(jsonObject);
-                gui.setPlayerName(setNameP.getPlayerNr(), setNameP.getName());
+                gui.setOpponentName(setNameP.getPlayerNr(), setNameP.getName());
                 break;
             case SETPLAYERNAME:
                 SetName setNameO = DTOJsonConverter.convertJsonToSetName(jsonObject);

@@ -49,14 +49,14 @@ public class SeaBattleGame implements ISeaBattleGame {
 
         // Set name in the GUIs of the players
         if(player.getPlayerNr() == 0){
-            application.setPlayerName(0, name);
+//            application.setPlayerName(0, name);
             if(singlePlayerMode){
-                application.setOpponentName(0, "CPU");
+                application.setOpponentName(1, "CPU");
             }
         }else{
-            application.setPlayerName(1,name);
-            application.setOpponentName(1, players.get(0).getName());
-            players.get(0).getGui().setOpponentName(0, name);
+//            application.setPlayerName(1, name);
+            application.setOpponentName(0, players.get(0).getName());
+            players.get(0).getGui().setOpponentName(1, name);
         }
 
         return player.getPlayerNr();
