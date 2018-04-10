@@ -1,6 +1,7 @@
 package seabattlegame.websocket.shared.dto;
 
 import com.google.gson.Gson;
+import seabattlegui.ShotType;
 
 public class DTOJsonConverter {
 
@@ -9,6 +10,10 @@ public class DTOJsonConverter {
 
     public static DataTransferObject convertJsonToDTO(String json){
         return  new Gson().fromJson(json, DataTransferObject.class);
+    }
+
+    public static String convertTypeToJson(ShotType type){
+        return new Gson().toJson(type);
     }
 
     public static String convertDTOToJson(DataTransferObject dto){
@@ -25,5 +30,19 @@ public class DTOJsonConverter {
 
     public static OpponentFiresShot convertJsonToFireShot(String json){
         return new Gson().fromJson(json, OpponentFiresShot.class);
+    }
+
+    public static ShotType convertJsonToShotType(String json){
+        if(json.contains("SUNK")){
+            return ShotType.SUNK;
+        }
+        else if(json.contains("MISSED")){
+            return ShotType.MISSED;
+        }
+        else if(json.contains("ALLSUNK")){
+            return ShotType.ALLSUNK;
+        }
+        else
+            return ShotType.HIT;
     }
 }

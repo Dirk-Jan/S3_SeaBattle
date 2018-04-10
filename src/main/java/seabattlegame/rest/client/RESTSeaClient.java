@@ -1,12 +1,17 @@
 package seabattlegame.rest.client;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.sun.javafx.scene.layout.region.Margins;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import seabattlegame.websocket.shared.dto.DTOJsonConverter;
+import seabattlegame.websocket.shared.dto.OpponentFiresShot;
 import seabattlegui.ShipType;
 import seabattlegui.ShotType;
 
@@ -201,6 +206,7 @@ public class RESTSeaClient {
 
         String query = String.format(standardURL + "/fireShotPlayer/%s,%s,%s", playerNr, posX, posY);
 
+        System.out.println(query);
         HttpGet httpget = new HttpGet(query);
 
         try {
@@ -211,11 +217,11 @@ public class RESTSeaClient {
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
             System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = ShotType.valueOf(stringResult);
+
+            ShotType type = DTOJsonConverter.convertJsonToShotType(entString);
+
+            System.out.println("[Result] : " + type );
+            result = type;
         }
         catch(Exception e){
             System.out.println(e);
@@ -227,9 +233,11 @@ public class RESTSeaClient {
     public ShotType fireShotOpponent(int playerNr){
         ShotType result = ShotType.MISSED;
 
-        String query = String.format(standardURL + "/fireShotPlayer/%s,", playerNr);
+        String query = String.format(standardURL + "/fireShotOpponent/%s", playerNr);
 
         HttpGet httpget = new HttpGet(query);
+
+        System.out.println(query);
 
         try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -239,11 +247,11 @@ public class RESTSeaClient {
             HttpEntity entity = httpResponse.getEntity();
             final String entString = EntityUtils.toString(entity);
             System.out.println("[Entity] : " + entString);
-            Gson gson = new Gson();
-            RESTLocalCalculator.Response jsonResponse = gson.fromJson(entString,RESTLocalCalculator.Response.class);
-            String stringResult = jsonResponse.getResult();
-            System.out.println("[Result] : " + stringResult );
-            result = ShotType.valueOf(stringResult);
+
+            ShotType type = DTOJsonConverter.convertJsonToShotType(entString);
+
+            System.out.println("[Result] : " + type );
+            result = type;
         }
         catch(Exception e){
             System.out.println(e);
