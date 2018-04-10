@@ -40,7 +40,7 @@ public class SeaBattleGame implements ISeaBattleGame {
     @Override
     public int registerPlayer(String name, ISeaBattleGUI application, boolean singlePlayerMode) {
         this.singlePlayerMode = singlePlayerMode;
-        Player player = new Player(players.size(), application);
+        Player player = new Player(players.size(), application, name);
         players.add(player);
 
         if(singlePlayerMode){
