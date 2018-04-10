@@ -2,6 +2,7 @@ package seabattlegame.websocket.client;
 
 import seabattlegame.websocket.shared.dto.*;
 import seabattlegui.ISeaBattleGUI;
+import seabattlegui.SeaBattleApplication;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -24,8 +25,13 @@ public class MessageHandler implements Observer{
         if(gui == null)
             return;
 
+
+
         String jsonObject = (String)arg;
         DataTransferObject dto = DTOJsonConverter.convertJsonToDTO(jsonObject);
+
+        if(((SeaBattleApplication)gui).getPlayerNr() != dto.getPlayerNr())
+            return;
 
 //        System.out.println("MessageHandler type received: " + dto.getType());
 
