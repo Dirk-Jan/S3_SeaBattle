@@ -44,7 +44,8 @@ public class MessageHandler implements Observer{
                 break;
             case SHOWSQUAREOPPONENT:
                 ShowSquare showSquareO = DTOJsonConverter.convertJsonToShowSquare(jsonObject);
-                gui.showSquarePlayer(showSquareO.getPlayerNr(), showSquareO.getX(), showSquareO.getY(), showSquareO.getSquareState());
+                gui.showSquareOpponent(showSquareO.getPlayerNr(), showSquareO.getX(), showSquareO.getY(), showSquareO.getSquareState());
+
                 break;
             case SHOWSQUAREPLAYER:
 //                System.out.println("A show square player message found.");

@@ -29,7 +29,7 @@ public class SeaBattleGuiCommunicationToClient implements ISeaBattleGUI{
     public void opponentFiresShot(int playerNr, ShotType shotType) {
         OpponentFiresShot opponentFiresShot = new OpponentFiresShot(playerNr, shotType);
         String message = new Gson().toJson(opponentFiresShot);
-        EventServerSocket.sendMessageToPlayer(playerNr, message);
+        EventServerSocket.broadcastMessage(message);
     }
 
     @Override
