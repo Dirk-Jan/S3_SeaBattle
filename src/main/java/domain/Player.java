@@ -49,11 +49,12 @@ public class Player {
         return playerNr;
     }
 
-    public Player(int playerNr, ISeaBattleGUI gui) {
+    public Player(int playerNr, ISeaBattleGUI gui, String name) {
         this.playerNr = playerNr;
         this.shipsToPlace = fillInventoryWithShips();
         this.field = new Field();
         this.gui = gui;
+        this.name = name;
     }
 
     //if inventory missing shipsToPlace we have to make the button unclickable

@@ -5,6 +5,7 @@
  */
 package seabattlegui;
 
+import seabattlegame.FakeSeaBattleGame;
 import seabattlegame.ISeaBattleGame;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -104,7 +105,9 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
     private Label labelHorizontalVertical;
     private RadioButton radioHorizontal;
     private RadioButton radioVertical;
-    
+
+
+
     // Buttons to register Player, start the game, and place or remove ships
     Button buttonRegisterPlayer;
     Button buttonPlaceAllShips;
@@ -467,7 +470,7 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
         // When invoking methods of class SeaBattleGame an
         // UnsupportedOperationException will be thrown
         // TODO: IMPLEMENT CLASS SeaBattleGame.
-        game = new SeaBattleGame();
+        game = new FakeSeaBattleGame();
     }
     
     /**
@@ -625,6 +628,10 @@ public class SeaBattleApplication extends Application implements ISeaBattleGUI {
                 }
             }
         });
+    }
+
+    public int getPlayerNr() {
+        return playerNr;
     }
     
     /**

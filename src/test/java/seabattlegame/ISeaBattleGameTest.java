@@ -15,10 +15,10 @@ import static org.junit.Assert.*;
 public class ISeaBattleGameTest {
 
     private ISeaBattleGame game;
-    private ISeaBattleGUI gui;
+    private static ISeaBattleGUI gui;
 
     @BeforeClass
-    public void initializeVariables() {
+    public static void initializeVariables() {
         gui = new SeaBattleApplication();
     }
 
